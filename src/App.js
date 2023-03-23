@@ -11,6 +11,14 @@ import ManageRoom from "./pages/ManageRoom";
 import ManageFacility from "./pages/ManageFacility";
 import ManageOfficeHour from "./pages/ManageOfficeHour";
 import DashBoard from "./pages/DashBoard";
+import Manage from "./pages/Manage";
+import NavBar from "./components/NavBar";
+import LoginSq from "./pages/LoginSq";
+import Meetingroom from "./pages/Meetingroom";
+import Daydate from "./pages/Daydate";
+import ManageAll from "./pages/ManageAll";
+
+
 
 const App = () => {
   // const Links = [
@@ -22,7 +30,13 @@ const App = () => {
 
   return (
     <>
-      <BrowserRouter>
+      {/* <NavBar /> */}
+      {/* <Manage /> */}
+      {/* <Meetingroom /> */}
+      {/* <ManageAll /> */}
+      <Daydate />
+      {/* <LoginSq /> */}
+      {/* <BrowserRouter>
         <div className="px-8 lg:px-32">
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -46,7 +60,7 @@ const App = () => {
             <Route exact path="/dashboard" element={<DashBoard />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   );
 };
