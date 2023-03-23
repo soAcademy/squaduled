@@ -25,19 +25,23 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.spacing(1),
+    borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[5],
     maxWidth: '400px',
-    width: '100%',
+    width: '80%',
   },
   input: {
     marginBottom: theme.spacing(2),
   },
   button: {
     marginTop: theme.spacing(2),
-    width: '100%',
+    width: '50%',
+    backgroundColor: "#4A7654", 
+    '&:hover': {
+      backgroundColor: "#6e9176",
+    },
   },
 }));
 
@@ -63,8 +67,11 @@ const LoginPage = () => {
   return (
     <Container className={classes.container}>
       <form className={classes.form} onSubmit={handleSubmit}>
-        <Typography variant="h4" gutterBottom>
-          Login
+        <Typography variant="h4" gutterBottom className='pt-5'>
+          ยินดีต้อนรับ
+        </Typography>
+        <Typography variant="h7" gutterBottom className='pd-10'>
+          เข้าสู่ระบบ Squaduled
         </Typography>
         <TextField
           className={classes.input}

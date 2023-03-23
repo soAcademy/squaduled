@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(4),
     marginRight: theme.spacing(4),
+    
   },
   paper: {
     display: 'flex',
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
     backgroundColor: '#f5f5f5',
+    
   },
   label: {
     marginLeft: theme.spacing(1),
@@ -40,10 +42,11 @@ const WeekdaysSwitches = () => {
 
   return (
     <div className={classes.root}>
+      
       <Typography variant="h4" style={{ marginBottom: '1rem' }}>Settings</Typography>
       {daysOfWeek.map((day) => (
         <Paper key={day} className={classes.paper}>
-          <Typography variant="body1" style={{ color: '#555' }}>
+          <Typography variant="body1" style={{ color: '#555' }}> 
             {day}
           </Typography>
           <FormGroup>

@@ -34,37 +34,42 @@ const MeetingRoomBooking = () => {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleOpen}>
-        Book Meeting Room
+        จองห้องพัก
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Book Meeting Room</DialogTitle>
+      <Dialog open={open} onClose={handleClose} >
+        <DialogTitle  >ค้นหาห้องประชุม</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Name"
-            fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <div className="text-xs">
+          ชื่อผู้จองดึงมากการlog-in
+          </div>
           <TextField
             margin="dense"
-            label="Number of Participants"
+            label="จำนวนผู้เข้าร่วม"
             type="number"
             fullWidth
             value={participants}
             onChange={(e) => setParticipants(e.target.value)}
           />
           <FormControl fullWidth>
-            <InputLabel>Date</InputLabel>
+            <InputLabel>วันที่</InputLabel>
             <Select value={date} onChange={(e) => setDate(e.target.value)}>
               <MenuItem value={new Date()}>Today</MenuItem>
               <MenuItem value={new Date(Date.now() + 86400000)}>Tomorrow</MenuItem>
               {/* Add more date options here */}
             </Select>
+            
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel>Time</InputLabel>
+            <InputLabel>ตั้งแต่</InputLabel>
+            <Select value={time} onChange={(e) => setTime(e.target.value)}>
+              <MenuItem value="09:00 AM">09:00 AM</MenuItem>
+              <MenuItem value="10:00 AM">10:00 AM</MenuItem>
+              {/* Add more time options here */}
+            </Select>
+            
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel>ถึง</InputLabel>
             <Select value={time} onChange={(e) => setTime(e.target.value)}>
               <MenuItem value="09:00 AM">09:00 AM</MenuItem>
               <MenuItem value="10:00 AM">10:00 AM</MenuItem>
@@ -74,10 +79,10 @@ const MeetingRoomBooking = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            กลับ
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Book
+            ค้นหา
           </Button>
         </DialogActions>
       </Dialog>

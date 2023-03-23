@@ -16,10 +16,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginBottom: theme.spacing(2),
-    backgroundColor: "#006400", 
+    backgroundColor: "#4A7654", 
+    '&:hover': {
+      backgroundColor: "#6e9176",
+    },
     color: "white", 
-    width: 800, 
+    width: 360, 
     height: 60, 
+    borderRadius: '30px',
+
   },
 }));
 
@@ -63,6 +68,9 @@ export default function MyComponent() {
       >
         จัดการรายการจอง
       </Button>
+      <div className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
+          กลับ
+        </div>
     </div>
   );
 }

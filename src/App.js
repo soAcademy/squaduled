@@ -32,9 +32,12 @@ const App = () => {
     <>
       {/* <NavBar /> */}
       {/* <Manage /> */}
-      {/* <Meetingroom /> */}
+      <Meetingroom />
+      <NavBar />
       {/* <ManageAll /> */}
-      <Daydate />
+      {/* <ManageBuilding /> */}
+      {/* <Daydate /> */}
+      {/* <ResultRoom /> */}
       {/* <LoginSq /> */}
       {/* <BrowserRouter>
         <div className="px-8 lg:px-32">
