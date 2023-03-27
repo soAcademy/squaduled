@@ -17,7 +17,7 @@ import LoginSq from "./pages/LoginSq";
 import Meetingroom from "./pages/Meetingroom";
 import Daydate from "./pages/Daydate";
 import ManageAll from "./pages/ManageAll";
-
+import Dateroom from "./pages/Dateroom";
 
 
 const App = () => {
@@ -32,6 +32,7 @@ const App = () => {
     <>
       {/* <NavBar /> */}
       {/* <Manage /> */}
+      {/* <Dateroom /> */}
       <Meetingroom />
       <NavBar />
       {/* <ManageAll /> */}
