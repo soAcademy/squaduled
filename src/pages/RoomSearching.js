@@ -78,7 +78,7 @@ const RoomSearching = () => {
         </div>
 
         <div>
-          <Box
+        <Box
             component="form"
             sx={{
               "& .MuiTextField-root": { width: "30ch" },
@@ -92,10 +92,12 @@ const RoomSearching = () => {
                 label="จำนวนผู้ประชุม"
                 type="number"
                 value={capacity}
-                InputLabelProps={{
-                  shrink: true,
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                onChange={(event) => {
+                  setCapacity(event.target.value);
                 }}
-                // onChange={(event) => handleChange(event.target.value)}
               />
             </div>
           </Box>
