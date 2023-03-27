@@ -18,6 +18,10 @@ import Meetingroom from "./pages/Meetingroom";
 import Daydate from "./pages/Daydate";
 import ManageAll from "./pages/ManageAll";
 import Dateroom from "./pages/Dateroom";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from "dayjs";
+
 
 
 const App = () => {
@@ -29,12 +33,17 @@ const App = () => {
   // ];
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      
+    
     <>
       {/* <NavBar /> */}
       {/* <Manage /> */}
       {/* <Dateroom /> */}
-      <Meetingroom />
-      <NavBar />
+      {/* <Meetingroom /> */}
+      {/* <NavBar /> */}
+      <RoomSearching />
+
       {/* <ManageAll /> */}
       {/* <ManageBuilding /> */}
       {/* <Daydate /> */}
@@ -66,6 +75,7 @@ const App = () => {
         </div>
       </BrowserRouter> */}
     </>
+    </LocalizationProvider>
   );
 };
 
