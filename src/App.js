@@ -18,22 +18,11 @@ import NavBar from "./components/NavBar";
 
 
 
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
-
 const App = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <>
-<<<<<<< HEAD
-        <BrowserRouter>
-          <div className="">
-            <Routes>
-              <Route exact path="/room-searching" element={<Home />} />
-              <Route exact path="/" element={<RoomSearching />} />
-=======
         <NavBar />
 
         <BrowserRouter>
@@ -41,7 +30,6 @@ const App = () => {
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/room-searching" element={<RoomSearching />} />
->>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
               <Route exact path="/result-room" element={<ResultRoom />} />
               <Route
                 exact
