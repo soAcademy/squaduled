@@ -98,15 +98,15 @@ const ResultRoom = () => {
       <div>
         <div
           onClick={() => navigate("/")}
-          className="fixed w-1/6 absolute float-left left-8 bottom-8 py-2 rounded-lg bg-[#4A7654] text-center text-gray-200 text-sm"
+          className="fixed w-1/6  float-left left-8 bottom-8 py-2 rounded-lg bg-[#4A7654] text-center text-gray-200 text-sm"
         >
           Back
         </div>
-        <div className="fixed bottom-0 w-full">
-          <button className="my-8 ml-auto px-5 py-2 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none">
+        {/* <div className="fixed bottom-0 w-full">
+          <button className="my-8 ml-auto px-5 py-2 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full">
             Next(Quiz)
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
