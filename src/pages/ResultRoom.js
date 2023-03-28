@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 import ResultRoomFilterFacility from "../components/ResultRoomFilterFacility";
 import ResultRoomLists from "../components/ResultRoomLists";
 import ResultRoomUserRequest from "../components/ResultRoomUserRequest";
@@ -12,6 +13,8 @@ const ResultRoom = () => {
   const [facilities, setFacilities] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [capacity, setCapacity] = useState(5);
+  const [showProgressRoomList, setShowProgressRoomList] = useState(false)
+  const [showProgressFacilities, setShowProgressFacilities] = useState(false)
   const [selectedTimeStart, setSelectedTimeStart] = useState(
     dayjs("2022-03-23T08:00")
   );
@@ -20,6 +23,7 @@ const ResultRoom = () => {
   );
 
   const loadFacility = () => {
+    setShowProgressFacilities(true)
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -34,10 +38,14 @@ const ResultRoom = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setShowProgressFacilities(false)
       });
   };
 
   const loadAvailableRooms = () => {
+    setShowProgressRoomList(true);
     let data = JSON.stringify({
       capacity: capacity,
       startDatetime: selectedTimeStart,
@@ -61,6 +69,9 @@ const ResultRoom = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setShowProgressRoomList(false)
       });
   };
 
@@ -73,10 +84,13 @@ const ResultRoom = () => {
     <div className="w-full">
       <ResultRoomUserRequest />
       <br />
+    {showProgressFacilities && <CircularProgress color="success" />}
       <ResultRoomFilterFacility
         facilities={facilities}
         setSelectedItem={setSelectedItem}
       />
+      {showProgressRoomList && <CircularProgress color="success" />}
+       
       <ResultRoomLists
         availableRooms={availableRooms}
         setSelectedRoom={setSelectedRoom}
@@ -84,9 +98,14 @@ const ResultRoom = () => {
       <div>
         <div
           onClick={() => navigate("/")}
-          className="w-1/6 absolute left-8 bottom-8 py-2 rounded-lg bg-[#4A7654] text-center text-gray-200 text-sm"
+          className="fixed w-1/6 absolute float-left left-8 bottom-8 py-2 rounded-lg bg-[#4A7654] text-center text-gray-200 text-sm"
         >
           Back
+        </div>
+        <div className="fixed bottom-0 w-full">
+          <button className="my-8 ml-auto px-5 py-2 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full focus:outline-none">
+            Next(Quiz)
+          </button>
         </div>
       </div>
     </div>
