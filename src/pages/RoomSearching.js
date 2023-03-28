@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
+=======
+
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
 import { Button, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
@@ -9,6 +13,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 
 const RoomSearching = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTimeStart, setSelectedTimeStart] = useState(
@@ -20,6 +25,19 @@ const RoomSearching = () => {
   const [isOfficeHour, setIsOfficeHour] = useState(true);
   const [capacity, setCapacity] = useState(0);
 
+=======
+
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedTimeStart, setSelectedTimeStart] = useState(
+    dayjs("2000-01-01T08:00")
+  );
+  const [selectedTimeEnd, setSelectedTimeEnd] = useState(
+    dayjs("2000-01-01T08:00")
+  );
+  const [isOfficeHour, setIsOfficeHour] = useState(true);
+  const [capacity, setCapacity] = useState(0);
+
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
   const checkIsOfficeHours = () => {
     let data = JSON.stringify({
       startDatetime: "2023-03-27 16:00:00.000",
@@ -42,7 +60,11 @@ const RoomSearching = () => {
         const responseData = response.data;
         if (responseData.result === true) {
           // alert("ok");
+<<<<<<< HEAD
           navigate("/result-room");
+=======
+          // navigate("/result-room");
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
         } else {
           setIsOfficeHour(false);
         }
@@ -53,10 +75,18 @@ const RoomSearching = () => {
       });
   };
 
+<<<<<<< HEAD
   // const handleChange = (event) => {
   //   setCapacity(event.target.value);
   // };
 
+=======
+  // const handleChange = () => {
+  //   setCapacity(event.target.value);
+  // };
+
+  const numbers = Array.from({ length: 31 }, (_, i) => i);
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
   // useEffect(() => {
   //   console.log("Date:", selectedDate);
   //   console.log("Start:", selectedTimeStart);
@@ -77,7 +107,11 @@ const RoomSearching = () => {
         </div>
 
         <div>
+<<<<<<< HEAD
           <Box
+=======
+        <Box
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
             component="form"
             sx={{
               "& .MuiTextField-root": { width: "30ch" },
@@ -147,7 +181,11 @@ const RoomSearching = () => {
               variant="contained"
               fullWidth
               className="bg-[#4A7654]"
+<<<<<<< HEAD
               onClick={checkIsOfficeHours}
+=======
+              // onClick={checkIsOfficeHours}
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
             >
               ค้นหา
             </Button>

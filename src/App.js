@@ -14,22 +14,34 @@ import DashBoard from "./pages/DashBoard";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
+import NavBar from "./components/NavBar";
+
+
+
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+
 const App = () => {
-  // const Links = [
-  //   { id: "UI-0", name: "Home", link: "/" },
-  //   { id: "UI-1", name: "RoomSearching", link: "/room-searching" },
-  //   { id: "UI-2", name: "ResultRoom", link: "/result-room" },
-  //   { id: "UI-4", name: "RoomBookingList&A", link: "/room-booking-list" },
-  // ];
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <>
+<<<<<<< HEAD
         <BrowserRouter>
           <div className="">
             <Routes>
               <Route exact path="/room-searching" element={<Home />} />
               <Route exact path="/" element={<RoomSearching />} />
+=======
+        <NavBar />
+
+        <BrowserRouter>
+          <div className="px-8 lg:px-32">
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/room-searching" element={<RoomSearching />} />
+>>>>>>> 2589fe349ad53c194ffe53c2d536a9f7ef26d4fb
               <Route exact path="/result-room" element={<ResultRoom />} />
               <Route
                 exact
