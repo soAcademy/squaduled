@@ -23,7 +23,7 @@ const ResultRoom = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:3200/squaduled/getAllFacility",
+      url: "https://squaduled-api-2miz.vercel.app/squaduled/getAllFacility",
       headers: {},
     };
 
@@ -47,7 +47,7 @@ const ResultRoom = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:3200/squaduled/checkAvailableRoom",
+      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkAvailableRoom",
       headers: {
         "Content-Type": "application/json",
       },
