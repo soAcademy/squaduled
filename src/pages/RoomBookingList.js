@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoomBookingList = () => {
+  const navigate = useNavigate();
   return (
-    <div>RoomBookingList</div>
-  )
-}
+    <div>
+      <button onClick={() => navigate("/")}>back</button>
+      
+    </div>
+  );
+};
 
-export default RoomBookingList
+export default RoomBookingList;
