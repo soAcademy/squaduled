@@ -29,7 +29,7 @@ const RoomSearching = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://localhost:3200/squaduled/checkIsOfficeHour",
+      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkIsOfficeHour",
       headers: {
         "Content-Type": "application/json",
       },
@@ -53,11 +53,6 @@ const RoomSearching = () => {
       });
   };
 
-  // const handleChange = () => {
-  //   setCapacity(event.target.value);
-  // };
-
-  const numbers = Array.from({ length: 31 }, (_, i) => i);
   // useEffect(() => {
   //   console.log("Date:", selectedDate);
   //   console.log("Start:", selectedTimeStart);
