@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import ResultRoomFilterFacility from "../components/ResultRoomFilterFacility";
 import ResultRoomLists from "../components/ResultRoomLists";
 import ResultRoomUserRequest from "../components/ResultRoomUserRequest";
@@ -13,8 +13,8 @@ const ResultRoom = () => {
   const [facilities, setFacilities] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
   const [capacity, setCapacity] = useState(5);
-  const [showProgressRoomList, setShowProgressRoomList] = useState(false)
-  const [showProgressFacilities, setShowProgressFacilities] = useState(false)
+  const [showProgressRoomList, setShowProgressRoomList] = useState(false);
+  const [showProgressFacilities, setShowProgressFacilities] = useState(false);
   const [selectedTimeStart, setSelectedTimeStart] = useState(
     dayjs("2022-03-23T08:00")
   );
@@ -23,7 +23,7 @@ const ResultRoom = () => {
   );
 
   const loadFacility = () => {
-    setShowProgressFacilities(true)
+    setShowProgressFacilities(true);
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -40,21 +40,20 @@ const ResultRoom = () => {
         console.log(error);
       })
       .finally(() => {
-        setShowProgressFacilities(false)
+        setShowProgressFacilities(false);
       });
   };
 
   const loadAvailableRooms = () => {
     setShowProgressRoomList(true);
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       capacity: capacity,
       startDatetime: selectedTimeStart,
       endDatetime: selectedTimeEnd,
     });
 
-    let config = {
+    const config = {
       method: "post",
-      maxBodyLength: Infinity,
       url: "https://squaduled-api-2miz.vercel.app/squaduled/checkAvailableRoom",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +70,7 @@ const ResultRoom = () => {
         console.log(error);
       })
       .finally(() => {
-        setShowProgressRoomList(false)
+        setShowProgressRoomList(false);
       });
   };
 
@@ -84,13 +83,13 @@ const ResultRoom = () => {
     <div className="w-full">
       <ResultRoomUserRequest />
       <br />
-    {showProgressFacilities && <CircularProgress color="success" />}
+      {showProgressFacilities && <CircularProgress color="success" />}
       <ResultRoomFilterFacility
         facilities={facilities}
         setSelectedItem={setSelectedItem}
       />
       {showProgressRoomList && <CircularProgress color="success" />}
-       
+
       <ResultRoomLists
         availableRooms={availableRooms}
         setSelectedRoom={setSelectedRoom}

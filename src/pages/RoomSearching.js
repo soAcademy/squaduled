@@ -30,14 +30,13 @@ const RoomSearching = () => {
 
   const checkIsOfficeHours = () => {
     setShowLoading(true);
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       startDatetime: startDatetime,
       endDatetime: endDatetime,
     });
 
-    let config = {
+    const config = {
       method: "post",
-      maxBodyLength: Infinity,
       url: "https://squaduled-api-2miz.vercel.app/squaduled/checkIsOfficeHour",
       headers: {
         "Content-Type": "application/json",
