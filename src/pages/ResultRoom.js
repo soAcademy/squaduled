@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ResultRoom = () => {
   const [selectedItem, setSelectedItem] = useState([]);
@@ -15,6 +16,7 @@ const ResultRoom = () => {
     { id: 9, name: "Speaker" },
     { id: 10, name: "Microphone" },
   ];
+  const navigate = useNavigate();
 return (
     <div className="w-full">
       <div className="sticky top-0 p-5 drop-shadow shadow-blue-600 bg-[#4A7654] -mx-8">
@@ -62,6 +64,12 @@ return (
           Back
         </div>
       </div>
+      <button
+        onClick={() => navigate("/room-searching")}
+        className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
+      >
+        กลับ
+      </button>
     </div>
   );
 };

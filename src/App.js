@@ -13,6 +13,7 @@ import ManageOfficeHour from "./pages/ManageOfficeHour";
 import DashBoard from "./pages/DashBoard";
 
 import NavBar from "./components/NavBar";
+import Nacbar from "./components/Nacbar";
 
 
 
@@ -25,10 +26,10 @@ const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <>
-        <NavBar />
-
+        {/* <NavBar /> */}
+        <Nacbar />
         <BrowserRouter>
-          <div className="px-8 lg:px-32">
+          
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/room-searching" element={<RoomSearching />} />
@@ -62,7 +63,7 @@ const App = () => {
               />
               <Route exact path="/dashboard" element={<DashBoard />} />
             </Routes>
-          </div>
+          
         </BrowserRouter>
       </>
     </LocalizationProvider>

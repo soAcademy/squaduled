@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   DialogActions,
   Dialog,
@@ -57,7 +58,7 @@ export default function MyComponent() {
     // Handle form submission here
   };
   
-
+  const navigate = useNavigate();
   
   return (
     <div className={classes.root}>
@@ -84,10 +85,10 @@ export default function MyComponent() {
         className={classes.button}
       >
         อาคาร C
-      </Button>
-      <div className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
+      </Button  >
+      <Button onClick={() => navigate("/management-list")} className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
         กลับ
-      </div>
+      </Button>
       <Button
         variant="outlined" color="primary" onClick={handleOpen}
         className="absolute bottom-8  right-8 p-4 rounded-full bg-[#618833] hover:bg-[#a2cf6e] text-center text-gray-200 text-xl"
