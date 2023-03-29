@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
+
+const localizedFormat = require("dayjs/plugin/localizedFormat");
+const dayjs = require("dayjs");
+dayjs.extend(localizedFormat);
 
 const RoomSearching = () => {
- 
-    
+  const navigate = useNavigate();
+  const [showLoading, setShowLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTimeStart, setSelectedTimeStart] = useState(
     dayjs("2000-01-01T08:00")
@@ -20,17 +25,19 @@ const RoomSearching = () => {
   );
   const [isOfficeHour, setIsOfficeHour] = useState(true);
   const [capacity, setCapacity] = useState(0);
+  const [startDatetime, setStartDatetime] = useState("");
+  const [endDatetime, setEndDatetime] = useState("");
 
   const checkIsOfficeHours = () => {
-    let data = JSON.stringify({
-      startDatetime: "2023-03-27 16:00:00.000",
-      endDatetime: "2023-03-27 17:00:00.000",
+    setShowLoading(true);
+    const data = JSON.stringify({
+      startDatetime: startDatetime,
+      endDatetime: endDatetime,
     });
 
-    let config = {
+    const config = {
       method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:3200/squaduled/checkIsOfficeHour",
+      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkIsOfficeHour",
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,7 +50,7 @@ const RoomSearching = () => {
         const responseData = response.data;
         if (responseData.result === true) {
           // alert("ok");
-          // navigate("/result-room");
+          navigate("/result-room");
         } else {
           setIsOfficeHour(false);
         }
@@ -51,25 +58,33 @@ const RoomSearching = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setShowLoading(false);
       });
   };
 
-  // const handleChange = () => {
-  //   setCapacity(event.target.value);
-  // };
+  useEffect(() => {
+    const formatDate = dayjs(selectedDate).format("YYYY-MM-DD");
+    const formatStartTime = dayjs(selectedTimeStart).format("HH:mm:ss.SSS");
+    const _startDatetime = `${formatDate} ${formatStartTime}`;
 
-  const numbers = Array.from({ length: 31 }, (_, i) => i);
-  // useEffect(() => {
-  //   console.log("Date:", selectedDate);
-  //   console.log("Start:", selectedTimeStart);
-  //   console.log("End:", selectedTimeEnd);
-  // }, [selectedDate, selectedTimeStart, selectedTimeEnd]);
+    setStartDatetime(_startDatetime);
+  }, [selectedDate, selectedTimeStart]);
+
+  useEffect(() => {
+    const formatDate = dayjs(selectedDate).format("YYYY-MM-DD");
+    const formatEndTime = dayjs(selectedTimeEnd).format("HH:mm:ss.SSS");
+    const _endDatetime = `${formatDate} ${formatEndTime}`;
+
+    setEndDatetime(_endDatetime);
+  }, [selectedDate, selectedTimeEnd]);
 
 
   return (
     <div className="flex flex-col justify-center items-center" >
       <div>
-        <div item>
+        <div>
           <h1 className="text-sm">สวัสดีคุณเค้ก</h1>
           <h1 className="text-sm">กรุณากรอกข้อมูลด้านล่าง</h1>
         </div>
@@ -81,7 +96,7 @@ const RoomSearching = () => {
         </div>
 
         <div>
-        <Box
+          <Box
             component="form"
             // sx={{
             //   "& .MuiTextField-root": { width: "50ch" },
@@ -150,12 +165,16 @@ const RoomSearching = () => {
             </div>
           )}
           <div>
+            {showLoading && (
+              <CircularProgress color="success" />
+            )}
+
             <Button
               
               variant="contained"
               fullWidth
               className="bg-[#4A7654]"
-              // onClick={checkIsOfficeHours}
+              onClick={checkIsOfficeHours}
             >
               ค้นหา
             </Button>
