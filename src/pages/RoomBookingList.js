@@ -1,20 +1,33 @@
-import { Button } from '@mui/material';
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 
 const RoomBookingList = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <div>RoomBookingList</div>
-      <Button
-        onClick={() => navigate("/management-list")}
-        className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          "& > :not(style)": {
+            m: 1,
+            width: 500,
+            height: 80,
+          },
+        }}
       >
-        กลับ
-      </Button>
-    </div>
-  )
-}
 
-export default RoomBookingList
+
+
+          <Paper elevation={3} />
+        
+      </Box>
+      <button onClick={() => navigate("/")}>back</button>
+    </div>
+  );
+};
+
+export default RoomBookingList;
