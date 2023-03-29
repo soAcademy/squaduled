@@ -80,31 +80,34 @@ const RoomSearching = () => {
     setEndDatetime(_endDatetime);
   }, [selectedDate, selectedTimeEnd]);
 
+
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center" >
       <div>
         <div>
           <h1 className="text-sm">สวัสดีคุณเค้ก</h1>
           <h1 className="text-sm">กรุณากรอกข้อมูลด้านล่าง</h1>
         </div>
       </div>
-      <div className="bg-gray-200 p-1 m-1 rounded-lg">
-        <div>
+      
+      <div className="bg-gray-200  p-4 m-4 rounded-lg md:w-1/3 xs:w-full ">
+        <div item>
           <h1 className="text-sm">ค้นหาห้องประชุม</h1>
         </div>
 
         <div>
           <Box
             component="form"
-            sx={{
-              "& .MuiTextField-root": { width: "30ch" },
-            }}
+            // sx={{
+            //   "& .MuiTextField-root": { width: "50ch" },
+            // }}
             noValidate
             autoComplete="off"
           >
             <div>
               <TextField
                 id="outlined-number"
+                fullWidth
                 label="จำนวนผู้ประชุม"
                 type="number"
                 value={capacity}
@@ -126,10 +129,11 @@ const RoomSearching = () => {
             closeOnSelect
             onChange={(newValue) => setSelectedDate(newValue)}
             label="วันที่"
+            fullWidth
           />
         </div>
         <br />
-        <div className="flex justify-between">
+        <div className="flex ">
           <div>
             <TimePicker
               // ampm={false}
@@ -139,11 +143,12 @@ const RoomSearching = () => {
               onChange={(newValue) => setSelectedTimeStart(newValue)}
             />
           </div>
-          <div>
+          <div className="ml-5">
             <TimePicker
               // ampm={false}
               ampmInClock
               label="ถึง"
+              
               value={selectedTimeEnd}
               onChange={(newValue) => setSelectedTimeEnd(newValue)}
             />
@@ -165,6 +170,7 @@ const RoomSearching = () => {
             )}
 
             <Button
+              
               variant="contained"
               fullWidth
               className="bg-[#4A7654]"
