@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManagementList = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={classes.root}>
@@ -36,6 +38,7 @@ const ManagementList = () => {
         การจัดการ
       </Typography>
       <Button
+        onClick={() => navigate("/manage-building")}
         variant="contained"
         size="large" // set size to large
         className={classes.button}
@@ -43,6 +46,7 @@ const ManagementList = () => {
         จัดการอาคารและสถานที่
       </Button>
       <Button
+        onClick={() => navigate("/manage-facility")}
         variant="contained"
         size="large" // set size to large
         className={classes.button}
@@ -50,6 +54,7 @@ const ManagementList = () => {
         จัดการสิ่งอำนวยความสะดวก
       </Button>
       <Button
+        onClick={() => navigate("/manage-office-hour")}
         variant="contained"
         size="large" // set size to large
         className={classes.button}
@@ -57,15 +62,18 @@ const ManagementList = () => {
         จัดการวันที่/เวลา ให้บริการ
       </Button>
       <Button
+        onClick={() => navigate("/room-booking-list")}
         variant="contained"
         size="large" // set size to large
         className={classes.button}
       >
         จัดการรายการจอง
       </Button>
-      <div className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
+      <Button
+        onClick={() => navigate("/room-searching")}
+       className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
         กลับ
-      </div>
+      </Button>
     </div>
   );
 };

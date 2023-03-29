@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControlLabel, FormGroup, Switch, Paper, Typography } from '@material-ui/core';
+import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +45,7 @@ const ManageOfficeHour = () => {
     setSwitches({ ...switches, [event.target.name]: event.target.checked });
   };
 
+  const navigate = useNavigate();
   return (
      <div className={classes.root}>
       
@@ -61,12 +65,22 @@ const ManageOfficeHour = () => {
                   name={day}
                   color="primary"
                 />
+                
               }
+              
             />
+            
           </FormGroup>
+          
         </Paper>
       ))}
+      <div>
+      <Button onClick={() => navigate("/management-list")} className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
+        กลับ
+      </Button>
+      </div>
     </div>
+    
   )
 }
 
