@@ -53,7 +53,14 @@ const NavBar = (props) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white">
           <Toolbar>
-            <Button color="inherit">Logo</Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Logo
+            </Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Squaduled
             </Typography>
