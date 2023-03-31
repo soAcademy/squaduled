@@ -53,10 +53,10 @@ const App = (props) => {
                 />
                 <Route
                   exact
-                  path="/manage-building"
+                  path="/manage-building/"
                   element={<ManageBuilding />}
                 />
-                <Route exact path="/manage-room" element={<ManageRoom />} />
+                <Route exact path="/manage-room/:buildingId" element={<ManageRoom />} />
                 <Route
                   exact
                   path="/manage-facility"
