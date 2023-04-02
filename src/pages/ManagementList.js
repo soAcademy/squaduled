@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@mui/material";
 import Typography from "@material-ui/core/Typography";
+import Grow from '@mui/material/Grow';
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +44,10 @@ const ManagementList = () => {
       <Typography variant="h5" className={classes.title}>
         การจัดการ
       </Typography>
-      {lists.map((list) => {
+      {lists.map((list,i) => {
         return (
+          <Grow in style={{ transformOrigin: '0 0 0' }}
+          {...( { timeout: i*500 })}>
           <Button
             onClick={() => navigate(list.path)}
             variant="contained"
@@ -53,6 +56,7 @@ const ManagementList = () => {
           >
             {list.manage}
           </Button>
+          </Grow>
         );
       })}
     </div>
