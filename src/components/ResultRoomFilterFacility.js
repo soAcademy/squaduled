@@ -8,6 +8,7 @@ import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import * as appConfig from '../AppConfig'
 
 const ResultRoomFilterFacility = (props) => {
   
@@ -29,7 +30,7 @@ const ResultRoomFilterFacility = (props) => {
     setShowProgressFacilities(true);
     const config = {
       method: "post",
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/getAllFacility",
+      url: `${appConfig.API_URL}/squaduled/getAllFacility`,
       headers: {},
     };
 
