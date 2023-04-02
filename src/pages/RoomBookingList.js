@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import axios from "axios";
-var utc = require('dayjs/plugin/utc')
+import * as appConfig from "../AppConfig";
+var utc = require("dayjs/plugin/utc");
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
-dayjs.extend(utc)
+dayjs.extend(utc);
 dayjs.extend(localizedFormat);
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
   label: {
     marginLeft: theme.spacing(1),
   },
+  title: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
 }));
 
 const RoomBookingList = () => {
@@ -42,7 +47,7 @@ const RoomBookingList = () => {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/getAllBooking",
+      url: `${appConfig.API_URL}/squaduled/getAllBooking`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,20 +67,30 @@ const RoomBookingList = () => {
   const navigate = useNavigate();
   return (
     <div className={classes.root}>
-      <Typography variant="h4" style={{ marginBottom: "1rem" }}>
-        Bookings
+      <Typography variant="h5" className={classes.title}>
+        รายการจอง
       </Typography>
       {bookings.map((booking) => {
-        const date = new Date(booking.startDatetime).toDateString()
+        const date = new Date(booking.startDatetime).toDateString();
         const startTime = booking.startDatetime.substring(11, 16);
         const endTime = booking.endDatetime.substring(11, 16);
         return (
-        <Paper key={booking.id} className={classes.paper}>
-          <Typography variant="body1" style={{ color: "#555" }}>
-            {booking.room.name} by {booking.user.firstName} at {date} from {startTime} to {endTime}
-          </Typography>
-        </Paper>
-      )})}
+          <Paper key={booking.id} className={classes.paper}>
+            <Typography style={{ color: "#555" }}>
+              {`${booking.room.name} by ${booking.user.firstName} at 
+              ${date} from ${startTime} to ${endTime}`}
+            </Typography>
+            <ButtonGroup>
+              <Button
+                // className="border border-gray-100 text-gray-100"
+                // onClick={() => handleDelete(building.id, building.name)}
+              >
+                ลบรายการจอง
+              </Button>
+            </ButtonGroup>
+          </Paper>
+        );
+      })}
       <div className="w-full fixed bottom-0">
         <Button
           onClick={() => navigate("/management-list")}
