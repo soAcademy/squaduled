@@ -7,6 +7,9 @@ import ResultRoomLists from "../components/ResultRoomLists";
 import ResultRoomUserRequest from "../components/ResultRoomUserRequest";
 import dayjs from "dayjs";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import * as appConfig from '../AppConfig'
+
 const ResultRoom = () => {
   const navigate = useNavigate();
   const [selectedFacilities, setSelectedFacilities] = React.useState([]);
@@ -15,25 +18,22 @@ const ResultRoom = () => {
   const [availableRooms, setAvailableRooms] = useState([]);
   const [availableRoomsFilterd, setAvailableRoomsFilterd] = useState([])
   const [showProgressRoomList, setShowProgressRoomList] = useState(false);
+  
+  const { capacity,selectedTimeStart,selectedTimeEnd } = useParams();
 
-  // +++++++++++++++ MOCKING data recieved from page roomsearch +++++++++++++++++
-  const capacity = 5;
-  const selectedTimeStart = dayjs("2022-03-23T08:00");
-  const selectedTimeEnd = dayjs("2022-03-23T10:00");
- // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
   const loadAvailableRooms = () => {
     setShowProgressRoomList(true);
     const data = JSON.stringify({
-      capacity: capacity,
+      capacity: +capacity,
       startDatetime: selectedTimeStart,
       endDatetime: selectedTimeEnd,
     });
 
     const config = {
       method: "post",
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkAvailableRoom",
+      url: `${appConfig.API_URL}/squaduled/checkAvailableRoom`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,8 +54,8 @@ const ResultRoom = () => {
   };
 
   useEffect(() => {
-    loadAvailableRooms();
-  }, []);
+      loadAvailableRooms();
+  }, [capacity]);
 
   useEffect(() => {
 
@@ -77,6 +77,8 @@ const ResultRoom = () => {
 
   return (
     <div className="w-full">
+      {selectedTimeStart}
+      {selectedTimeEnd}
       <ResultRoomUserRequest />
       <br />
 
@@ -85,16 +87,20 @@ const ResultRoom = () => {
         setSelectedFacilities={setSelectedFacilities}
         facilities={facilities}
       />
-      {showProgressRoomList && <CircularProgress color="success" />}
+      {showProgressRoomList ? (
+        <CircularProgress color="success" />
+      ) : (
+        <ResultRoomLists
+          availableRoomsFilterd={availableRoomsFilterd}
+          setSelectedRoom={setSelectedRoom}
+        />
+      )}
       {/* {JSON.stringify(selectedFacilities)}
       {JSON.stringify(availableRoomsFilterd)} */}
-      <ResultRoomLists
-        availableRoomsFilterd={availableRoomsFilterd}
-        setSelectedRoom={setSelectedRoom}
-      />
+
       <div className="w-full fixed bottom-0">
         <Button
-          onClick={() => navigate("/manage-building")}
+          onClick={() => navigate("/room-searching")}
           className="fixed float-left left-8 bottom-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
         >
           กลับ

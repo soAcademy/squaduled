@@ -39,7 +39,7 @@ const App = (props) => {
                   path="/room-searching"
                   element={<RoomSearching />}
                 />
-                <Route exact path="/result-room" element={<ResultRoom />} />
+                <Route exact path="/result-room/:capacity/:selectedTimeStart/:selectedTimeEnd" element={<ResultRoom />} />
                 <Route
                   exact
                   path="/room-booking-list"
@@ -56,7 +56,11 @@ const App = (props) => {
                   path="/manage-building/"
                   element={<ManageBuilding />}
                 />
-                <Route exact path="/manage-room/:buildingId" element={<ManageRoom />} />
+                <Route
+                  exact
+                  path="/manage-room/:buildingId"
+                  element={<ManageRoom />}
+                />
                 <Route
                   exact
                   path="/manage-facility"
