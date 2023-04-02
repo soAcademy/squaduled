@@ -1,60 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@material-ui/core/Button";
 import ResultRoomFilterFacility from "../components/ResultRoomFilterFacility";
 import ResultRoomLists from "../components/ResultRoomLists";
 import ResultRoomUserRequest from "../components/ResultRoomUserRequest";
 import dayjs from "dayjs";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import * as appConfig from '../AppConfig'
+
 const ResultRoom = () => {
   const navigate = useNavigate();
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedFacilities, setSelectedFacilities] = React.useState([]);
   const [selectedRoom, setSelectedRoom] = useState({});
   const [facilities, setFacilities] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
-  const [capacity, setCapacity] = useState(5);
+  const [availableRoomsFilterd, setAvailableRoomsFilterd] = useState([])
   const [showProgressRoomList, setShowProgressRoomList] = useState(false);
-  const [showProgressFacilities, setShowProgressFacilities] = useState(false);
-  const [selectedTimeStart, setSelectedTimeStart] = useState(
-    dayjs("2022-03-23T08:00")
-  );
-  const [selectedTimeEnd, setSelectedTimeEnd] = useState(
-    dayjs("2022-03-23T10:00")
-  );
+  
+  const { capacity,selectedTimeStart,selectedTimeEnd } = useParams();
 
-  const loadFacility = () => {
-    setShowProgressFacilities(true);
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/getAllFacility",
-      headers: {},
-    };
 
-    axios
-      .request(config)
-      .then((response) => {
-        setFacilities(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setShowProgressFacilities(false);
-      });
-  };
 
   const loadAvailableRooms = () => {
     setShowProgressRoomList(true);
     const data = JSON.stringify({
-      capacity: capacity,
+      capacity: +capacity,
       startDatetime: selectedTimeStart,
       endDatetime: selectedTimeEnd,
     });
 
     const config = {
       method: "post",
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkAvailableRoom",
+      url: `${appConfig.API_URL}/squaduled/checkAvailableRoom`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -75,37 +54,57 @@ const ResultRoom = () => {
   };
 
   useEffect(() => {
-    loadFacility();
-    loadAvailableRooms();
-  }, []);
+      loadAvailableRooms();
+  }, [capacity]);
+
+  useEffect(() => {
+
+    if (availableRooms) {
+      const filtered = availableRooms?.map(room => {
+        const facilityIdList = room.roomFacilities?.map(facility => facility.facilityId);
+        return {...room,facilityIdList}
+      }).filter(room => selectedFacilities.every(val => room.facilityIdList.includes(val)))
+      // .filter((room) =>
+      //   selectedFacilities.includes(
+      //     room.facilities.map((facility) => {return facility.facilityId})
+      //   )
+      // );
+      setAvailableRoomsFilterd(filtered);
+    }
+
+  }, [selectedFacilities,availableRooms]);
+  
 
   return (
     <div className="w-full">
+      {selectedTimeStart}
+      {selectedTimeEnd}
       <ResultRoomUserRequest />
       <br />
-      {showProgressFacilities && <CircularProgress color="success" />}
-      <ResultRoomFilterFacility
-        facilities={facilities}
-        setSelectedItem={setSelectedItem}
-      />
-      {showProgressRoomList && <CircularProgress color="success" />}
 
-      <ResultRoomLists
-        availableRooms={availableRooms}
-        setSelectedRoom={setSelectedRoom}
+      <ResultRoomFilterFacility
+        selectedFacilities={selectedFacilities}
+        setSelectedFacilities={setSelectedFacilities}
+        facilities={facilities}
       />
-      <div>
-        <div
-          onClick={() => navigate("/")}
-          className="fixed w-1/6  float-left left-8 bottom-8 py-2 rounded-lg bg-[#4A7654] text-center text-gray-200 text-sm"
+      {showProgressRoomList ? (
+        <CircularProgress color="success" />
+      ) : (
+        <ResultRoomLists
+          availableRoomsFilterd={availableRoomsFilterd}
+          setSelectedRoom={setSelectedRoom}
+        />
+      )}
+      {/* {JSON.stringify(selectedFacilities)}
+      {JSON.stringify(availableRoomsFilterd)} */}
+
+      <div className="w-full fixed bottom-0">
+        <Button
+          onClick={() => navigate("/room-searching")}
+          className="fixed float-left left-8 bottom-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
         >
-          Back
-        </div>
-        {/* <div className="fixed bottom-0 w-full">
-          <button className="my-8 ml-auto px-5 py-2 bg-red-500 text-white text-sm font-bold tracking-wide rounded-full">
-            Next(Quiz)
-          </button>
-        </div> */}
+          กลับ
+        </Button>
       </div>
     </div>
   );

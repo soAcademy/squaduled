@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 // import dayjs from "dayjs";
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
+import * as appConfig from '../AppConfig'
 
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
@@ -37,7 +38,7 @@ const RoomSearching = () => {
 
     const config = {
       method: "post",
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/checkIsOfficeHour",
+      url: `${appConfig.API_URL}/squaduled/checkIsOfficeHour`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -50,7 +51,7 @@ const RoomSearching = () => {
         const responseData = response.data;
         if (responseData.result === true) {
           // alert("ok");
-          navigate("/result-room");
+          navigate(`/result-room/${capacity}/${startDatetime}/${endDatetime}`);
         } else {
           setIsOfficeHour(false);
         }

@@ -1,0 +1,1 @@
+export const API_URL = 'https://squaduled-api-2miz.vercel.app'

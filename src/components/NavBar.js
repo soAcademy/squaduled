@@ -53,7 +53,14 @@ const NavBar = (props) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white">
           <Toolbar>
-            <Button color="inherit">Logo</Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Logo
+            </Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Squaduled
             </Typography>
@@ -93,7 +100,22 @@ const NavBar = (props) => {
               >
                 Dash board
               </MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/management-list");
+                  setAnchorEl(null);
+                }}
+              >
+                Admin
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/log-in");
+                  setAnchorEl(null);
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
