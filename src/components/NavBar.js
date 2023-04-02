@@ -100,7 +100,22 @@ const NavBar = (props) => {
               >
                 Dash board
               </MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/management-list");
+                  setAnchorEl(null);
+                }}
+              >
+                Admin
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/log-in");
+                  setAnchorEl(null);
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
