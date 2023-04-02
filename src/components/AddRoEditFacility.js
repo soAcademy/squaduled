@@ -9,15 +9,10 @@ import { TextField } from '@mui/material';
 
 const AddRoEditFacility = (props) => {
 
-  const handleClose = () => {
-    
-  };
-
   return (
-    <div>
+
     <Dialog
       open={props.openDialog}
-      onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -34,7 +29,7 @@ const AddRoEditFacility = (props) => {
         </Button>
       </DialogActions>
     </Dialog>
-  </div>
+
   )
 }
 

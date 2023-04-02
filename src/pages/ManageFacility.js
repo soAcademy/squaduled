@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
+import Grow from "@mui/material/Grow";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import AddRoEditFacility from "../components/AddRoEditFacility";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import * as appConfig from "../AppConfig";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,21 +32,23 @@ const useStyles = makeStyles((theme) => ({
   label: {
     marginLeft: theme.spacing(1),
   },
+  title: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
 }));
 
 const ManageFacility = () => {
   const [facilities, setFacilities] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedId, setSelectedId] = useState(0)
+  const [selectedId, setSelectedId] = useState(0);
   const [showLoadingfacility, setShowLoadingfacility] = useState(false);
-  const [facilityName, setFacilityName] = useState('')
-  const [title, setTitle] = useState('')
+  const [facilityName, setFacilityName] = useState("");
+  const [title, setTitle] = useState("");
   const navigate = useNavigate();
   const classes = useStyles();
 
-  const handleAdd = () => {};
-
-  const handleDelete = (id,name) => {
+  const handleDelete = (id, name) => {
     Swal.fire({
       title: "Are you sure?",
       text: `Confirm delete ${name}?`,
@@ -55,34 +59,38 @@ const ManageFacility = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteFacility(id)
+        deleteFacility(id);
       }
     });
   };
 
   const handleAddOpen = () => {
     setSelectedId(0);
-    setFacilityName('')
-    setOpenDialog(true)
-    setTitle('เพิ่มสิ่งอำนวยความสะดวก')
-    
-  }
-
-  const handleEditOpen = (id,name) => {
-    setSelectedId(id)
-    setTitle(`Edit : ${name}`)
-    setFacilityName(name)
+    setFacilityName("");
     setOpenDialog(true);
-    
+    setTitle("เพิ่มสิ่งอำนวยความสะดวก");
+  };
+
+  const handleEditOpen = (id, name) => {
+    setSelectedId(id);
+    setTitle(`Edit : ${name}`);
+    setFacilityName(name);
+    setOpenDialog(true);
   };
 
   const handleOk = () => {
- if (selectedId === 0){
-      createFacility()
-    }else {
-      updateFacility()
+    if (selectedId === 0) {
+      createFacility();
+    } else {
+      updateFacility();
     }
-  }
+  };
+
+  const handleCancel = () => {
+    setTitle("");
+    setOpenDialog(false);
+    setFacilityName("");
+  };
 
   const deleteFacility = (id) => {
     const data = JSON.stringify({
@@ -92,7 +100,7 @@ const ManageFacility = () => {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/deleteFacility",
+      url: `${appConfig.API_URL}/squaduled/deleteFacility`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -108,7 +116,7 @@ const ManageFacility = () => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   const updateFacility = () => {
     const data = JSON.stringify({
@@ -119,7 +127,7 @@ const ManageFacility = () => {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/updateFacility",
+      url: `${appConfig.API_URL}/squaduled/updateFacility`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -130,7 +138,7 @@ const ManageFacility = () => {
       .request(config)
       .then((response) => {
         getAllFacility();
-        setOpenDialog(false)
+        setOpenDialog(false);
       })
       .catch((error) => {
         console.log(error);
@@ -139,41 +147,36 @@ const ManageFacility = () => {
 
   const createFacility = () => {
     const data = JSON.stringify({
-      "name": facilityName
+      name: facilityName,
     });
-    
-    const config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://squaduled-api-2miz.vercel.app/squaduled/createFacility',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios.request(config)
-    .then((response) => {
-      //refresh data
-      getAllFacility()
-      setOpenDialog(false)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
 
-  const handleCancel = () => {
-    setTitle('')
-    setOpenDialog(false)
-    setFacilityName('')
-  }
+    const config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${appConfig.API_URL}/squaduled/createFacility`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        //refresh data
+        getAllFacility();
+        setOpenDialog(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const getAllFacility = () => {
     setShowLoadingfacility(true);
     const config = {
       method: "post",
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/getAllFacility",
+      url: `${appConfig.API_URL}/squaduled/getAllFacility`,
       headers: {},
     };
 
@@ -188,24 +191,33 @@ const ManageFacility = () => {
       .finally(() => {
         setShowLoadingfacility(false);
       });
-  }
+  };
 
   useEffect(() => {
-    getAllFacility()
+    getAllFacility();
   }, []);
 
   return (
     <div>
-      <div className="text-lg font-bold">รายการสิ่งอำนวยความสะดวก</div>
+      <Typography variant="h5" className={classes.title}>
+        รายการสิ่งอำนวยความสะดวก
+      </Typography>
       {showLoadingfacility && <CircularProgress color="success" />}
       <br></br>
       {facilities.map((item) => (
         <Paper key={item.id} className={classes.paper}>
           <Typography variant="body1" style={{ color: "#555" }}>
             {item.name}
-            <Button onClick={() => handleEditOpen(item.id,item.name)}>Edit</Button>
-            <Button onClick={() => handleDelete(item.id,item.name)}>Delete</Button>
           </Typography>
+          <ButtonGroup>
+            {" "}
+            <Button onClick={() => handleEditOpen(item.id, item.name)}>
+              Edit
+            </Button>
+            <Button onClick={() => handleDelete(item.id, item.name)}>
+              Delete
+            </Button>
+          </ButtonGroup>
         </Paper>
       ))}
 
@@ -227,13 +239,13 @@ const ManageFacility = () => {
       </div>
       <AddRoEditFacility
         title={title}
-        facilityName= {facilityName}
+        facilityName={facilityName}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         setFacilityName={setFacilityName}
         handleOk={handleOk}
         handleCancel={handleCancel}
-      ></AddRoEditFacility>
+      />
     </div>
   );
 };
