@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import * as appConfig from "../AppConfig";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,28 +40,28 @@ const useStyles = makeStyles((theme) => ({
 const ManageOfficeHour = () => {
   const classes = useStyles();
   const [officeHourObject, setOfficeHourObject] = useState({
-    id: 1,
-    isOpenMonday: true,
-    openingTimeMonday: "08:00:00",
-    closingTimeMonday: "17:00:00",
-    isOpenTuesday: true,
-    openingTimeTuesday: "08:00:00",
-    closingTimeTuesday: "17:00:00",
-    isOpenWednesday: true,
-    openingTimeWednesday: "08:00:00",
-    closingTimeWednesday: "17:00:00",
-    isOpenThursday: true,
-    openingTimeThursday: "08:00:00",
-    closingTimeThursday: "17:00:00",
-    isOpenFriday: true,
-    openingTimeFriday: "08:00:00",
-    closingTimeFriday: "17:00:00",
-    isOpenSaturday: false,
-    openingTimeSaturday: "08:00:00",
-    closingTimeSaturday: "17:00:00",
-    isOpenSunday: false,
-    openingTimeSunday: "08:00:00",
-    closingTimeSunday: "17:00:00",
+    // id: 1,
+    // isOpenMonday: true,
+    // openingTimeMonday: "08:00:00",
+    // closingTimeMonday: "17:00:00",
+    // isOpenTuesday: true,
+    // openingTimeTuesday: "08:00:00",
+    // closingTimeTuesday: "17:00:00",
+    // isOpenWednesday: true,
+    // openingTimeWednesday: "08:00:00",
+    // closingTimeWednesday: "17:00:00",
+    // isOpenThursday: true,
+    // openingTimeThursday: "08:00:00",
+    // closingTimeThursday: "17:00:00",
+    // isOpenFriday: true,
+    // openingTimeFriday: "08:00:00",
+    // closingTimeFriday: "17:00:00",
+    // isOpenSaturday: false,
+    // openingTimeSaturday: "08:00:00",
+    // closingTimeSaturday: "17:00:00",
+    // isOpenSunday: false,
+    // openingTimeSunday: "08:00:00",
+    // closingTimeSunday: "17:00:00",
   });
 
   const handleChangeOpenClose = (day) => {
@@ -80,6 +81,39 @@ const ManageOfficeHour = () => {
     setOfficeHourObject(newObject);
   };
 
+  const handleSave = () => {
+    updateOfficeHour().then((res) =>{
+      Swal.fire(
+        'สำเร็จ!',
+        'บันทึกการตั้งค่าเรียบร้อยแล้ว',
+        'success'
+      )
+    }).catch((err)=>{
+      Swal.fire(
+        'แย่แล้ว!',
+        'การบันทึกล้มเหลว',
+        'error'
+      )
+    })
+  };
+
+  const updateOfficeHour = () => {
+    const data = JSON.stringify(officeHourObject);
+
+    const config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${appConfig.API_URL}/squaduled/updateOfficeHour2`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+   return axios.request(config)
+
+  };
+
   useEffect(() => {
     let config = {
       method: "post",
@@ -91,7 +125,7 @@ const ManageOfficeHour = () => {
     axios
       .request(config)
       .then((response) => {
-        setOfficeHourObject(response.data);
+        setOfficeHourObject(response.data[0]);
       })
       .catch((error) => {
         console.log(error);
@@ -119,7 +153,7 @@ const ManageOfficeHour = () => {
       <Typography variant="h4" style={{ marginBottom: "1rem" }}>
         Settings
       </Typography>
-      {daysOfWeek.map((day) => {
+      {officeHourObject.id && daysOfWeek.map((day) => {
         return (
           <Paper key={day} className={classes.paper}>
             <Typography variant="body1" style={{ color: "#555" }}>
@@ -175,6 +209,7 @@ const ManageOfficeHour = () => {
           variant="outlined"
           color="primary"
           className="fixed  float-right  right-8 bottom-8 p-4 rounded-full bg-[#618833] hover:bg-[#a2cf6e] text-center text-gray-200 text-xl"
+          onClick={() => handleSave()}
         >
           Save
         </Button>
