@@ -50,6 +50,7 @@ const App = (props) => {
   
 
   return (
+
     <AuthContext.Provider value={loginDetail}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <React.Fragment>
@@ -111,6 +112,8 @@ const App = (props) => {
         </React.Fragment>
       </LocalizationProvider>
     </AuthContext.Provider>
+
+
   );
 };
 
