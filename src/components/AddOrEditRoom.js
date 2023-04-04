@@ -109,21 +109,24 @@ const AddOrEditRoom = (props) => {
           ? `แก้ไขห้อง ${props.selectedRoom.name}`
           : "เพิ่มห้อง"}
       </DialogTitle>
-      {JSON.stringify(selectedFacilityIds)}
+      
       <DialogContent>
         <TextField
+        sx={{ m: 1, width: 280 }}
           label="Name"
           name="room-name"
           value={props.selectedRoom?.name}
           onChange={(e) => props.setRoomName(e.target.value)}
         ></TextField>
         <TextField
+        sx={{ m: 1, width: 280 }}
           name="floor"
           label="Floor"
           value={props.selectedRoom?.floor}
           onChange={(e) => props.setRoomFloor(e.target.value)}
         ></TextField>
         <TextField
+        sx={{ m: 1, width: 280 }}
           name="capacityMax"
           label="Capacity"
           type="number"
@@ -131,7 +134,7 @@ const AddOrEditRoom = (props) => {
           onChange={(e) => props.setRoomCapacityMax(e.target.value)}
         ></TextField>
         {/* //multiSelect */}
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={{ m: 1, width: 280 }}>
           <InputLabel id="demo-multiple-chip-label">Facilities</InputLabel>
           <Select
             labelId="demo-multiple-chip-label"

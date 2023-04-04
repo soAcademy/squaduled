@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     padding: theme.spacing(1),
-    background: "#ebebeb",
+    background: "#fff",
     borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[5],
     maxWidth: "300px",
@@ -30,15 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     marginBottom: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    width: "50%",
-    backgroundColor: "#4A7654",
-    "&:hover": {
-      backgroundColor: "#6e9176",
-    },
   },
 }));
 
@@ -127,7 +118,6 @@ const Login = (props) => {
           <CircularProgress color="success" />
         ) : (
           <Button
-            // className={classes.button}
             className="px-6 mb-6 bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white"
             variant="contained"
             color="primary"

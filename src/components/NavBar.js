@@ -65,10 +65,10 @@ const NavBar = (props) => {
             <Button
               color="inherit"
               onClick={() => {
-                navigate("/");
+                navigate(auth.isLoggedIn ? "/" : "/login");
               }}
             >
-              <img src={logo} className="w-[40px]"/>
+              <img src={logo} className="w-[40px]" />
             </Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Squaduled

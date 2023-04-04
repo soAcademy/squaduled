@@ -4,13 +4,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-// import dayjs from "dayjs";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import * as appConfig from "../AppConfig";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-import Swal from "sweetalert2";
 
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
@@ -25,7 +23,7 @@ const RoomSearching = () => {
     dayjs("2000-01-01T08:00")
   );
   const [selectedTimeEnd, setSelectedTimeEnd] = useState(
-    dayjs("2000-01-01T08:00")
+    dayjs("2000-01-01T08:30")
   );
   const [isOfficeHour, setIsOfficeHour] = useState(true);
   const [capacity, setCapacity] = useState(0);
@@ -54,12 +52,11 @@ const RoomSearching = () => {
       .then((response) => {
         const responseData = response.data;
         if (responseData.result === true) {
-          // alert("ok");
           navigate(`/result-room/${capacity}/${startDatetime}/${endDatetime}`);
         } else {
           setIsOfficeHour(false);
         }
-        // console.log(JSON.stringify(response.data));
+
       })
       .catch((error) => {
         console.log(error);
@@ -97,32 +94,23 @@ const RoomSearching = () => {
         </Typography>
       </div>
 
-      <div className="bg-[#ededed] shadow-lg shadow-gray-600 p-4 m-4 rounded-lg md:w-1/3 xs:w-full">
+      <div className="bg-[#fff] shadow-lg shadow-gray-600 p-4 m-4 rounded-lg md:w-1/3 xs:w-full">
         <Typography align="center" variant="h5">
           ค้นหาห้องประชุม
         </Typography>
 
         <div className="mt-3">
-          <Box
-            component="form"
-            // sx={{
-            //   "& .MuiTextField-root": { width: "50ch" },
-            // }}
-            noValidate
-            autoComplete="off"
-          >
-          
-              <TextField
-                id="outlined-number"
-                fullWidth
-                label="จำนวนผู้ประชุม"
-                type="number"
-                value={capacity}
-                onChange={(event) => {
-                  setCapacity(event.target.value);
-                }}
-              />
-           
+          <Box component="form" noValidate autoComplete="off">
+            <TextField
+              id="outlined-number"
+              fullWidth
+              label="จำนวนผู้ประชุม"
+              type="number"
+              value={capacity}
+              onChange={(event) => {
+                setCapacity(event.target.value);
+              }}
+            />
           </Box>
         </div>
         <br />
@@ -166,7 +154,6 @@ const RoomSearching = () => {
                 ไม่อยู่ในช่วงเวลาทำการ
               </Typography>
             </div>
-
           )}
           <div>
             {showLoading && <CircularProgress color="success" />}

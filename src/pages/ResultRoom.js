@@ -71,11 +71,7 @@ const ResultRoom = () => {
         .filter((room) =>
           selectedFacilities.every((val) => room.facilityIdList.includes(val))
         );
-      // .filter((room) =>
-      //   selectedFacilities.includes(
-      //     room.facilities.map((facility) => {return facility.facilityId})
-      //   )
-      // );
+
       setAvailableRoomsFilterd(filtered);
     }
   }, [selectedFacilities, availableRooms]);
@@ -99,8 +95,6 @@ const ResultRoom = () => {
           setSelectedRoom={setSelectedRoom}
         />
       )}
-      {/* {JSON.stringify(selectedFacilities)}
-      {JSON.stringify(availableRoomsFilterd)} */}
 
       <div className="w-full fixed bottom-0">
         <IconButton
