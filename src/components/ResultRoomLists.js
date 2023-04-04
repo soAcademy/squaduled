@@ -1,21 +1,14 @@
 import React from "react";
 import Grow from "@mui/material/Grow";
 import { useNavigate } from "react-router-dom";
-import { TransitionGroup } from "react-transition-group";
 import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../context/auth";
@@ -40,7 +33,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ResultRoomLists = ({ setSelectedRoom, availableRoomsFilterd }) => {
+const ResultRoomLists = ({ availableRoomsFilterd }) => {
   const auth = useAuth();
   const { selectedTimeStart, selectedTimeEnd } = useParams();
   const navigate = useNavigate();
@@ -70,7 +63,7 @@ const ResultRoomLists = ({ setSelectedRoom, availableRoomsFilterd }) => {
       // text: ,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#4d9669",
       cancelButtonColor: "#d33",
       confirmButtonText: "ยืนยัน",
     }).then((result) => {
@@ -135,7 +128,12 @@ const ResultRoomLists = ({ setSelectedRoom, availableRoomsFilterd }) => {
             >
               <Card
                 key={room.id}
-                sx={{ width: "90%", maxWidth:"500px", marginBottom: 1, background: "#ebebeb" }}
+                sx={{
+                  width: "90%",
+                  maxWidth: "500px",
+                  marginBottom: 1,
+                  background: "#ebebeb",
+                }}
               >
                 <CardHeader
                   title={`ห้อง ${room.name}`}
@@ -184,7 +182,7 @@ const ResultRoomLists = ({ setSelectedRoom, availableRoomsFilterd }) => {
                   timeout="auto"
                   unmountOnExit
                 >
-                  <CardContent >
+                  <CardContent>
                     <div className="grid grid-cols-2 gap-1">
                       {room.roomFacilities.map((facility) => (
                         <Typography align="left">

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Grow from "@mui/material/Grow";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Typography } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { Button, ButtonGroup, IconButton } from "@mui/material";
-import { IoAddCircle, IoArrowBackCircle } from "react-icons/io5";
+import { IconButton, Paper, Typography } from "@mui/material";
+import { IoArrowBackCircle } from "react-icons/io5";
 import CircularProgress from "@mui/material/CircularProgress";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
     padding: theme.spacing(2),
@@ -106,7 +105,6 @@ const RoomBookingList = () => {
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
         setBookings(response.data);
       })
       .catch((error) => {
@@ -136,23 +134,26 @@ const RoomBookingList = () => {
           <Grow
             in
             style={{ transformOrigin: "0 0 0" }}
-            {...{ timeout: i * 500 }}
+            {...{ timeout: i * 300 }}
           >
             <Paper key={booking.id} className={classes.paper}>
-              <Typography style={{ color: "#555" }}>
-                {`${booking.room.name} by ${booking.user.firstName} at 
-              ${date} from ${startTime} to ${endTime}`}
-              </Typography>
-              <ButtonGroup>
-                {auth.role === "admin" && (
-                  <IconButton
-                    // className="border border-gray-100 text-gray-100"
-                    onClick={() => handleDelete(booking.id, booking.name)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-              </ButtonGroup>
+              <div>
+                <Typography style={{ color: "#555" }}>
+                  {`${booking.room.name} จองโดยคุณ ${booking.user.firstName} ${booking.user.lastName}`}
+                </Typography>
+
+                <Typography style={{ color: "#555" }}>
+                  {`${date} เวลา ${startTime} น. - ${endTime} น.`}
+                </Typography>
+              </div>
+
+              {auth.role === "admin" && (
+                <IconButton
+                  onClick={() => handleDelete(booking.id, booking.name)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
             </Paper>
           </Grow>
         );

@@ -58,13 +58,13 @@ export default function MyComponent() {
   // +++++++ handle clicks +++++++
   const handleDelete = (id, name) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: `Confirm delete ${id} ${name}?`,
+      title: `ต้องการลบ ${name}?`,
+      text: `คุณได้ลบห้องออกจาก ${name} หมดแล้ว?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#4d9669",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "ยืนยัน!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteBuilding(id);

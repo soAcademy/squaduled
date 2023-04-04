@@ -82,6 +82,31 @@ const ManageRoom = () => {
       });
   };
 
+  const deleteRoom = (id) => {
+    const data = JSON.stringify({
+      id: id,
+    });
+
+    const config = {
+      method: "post",
+      url: "https://squaduled-api-2miz.vercel.app/squaduled/deleteRoom",
+      headers: {
+        Authorization: auth.token,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        loadRooms();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const loadFacilities = () => {
     let config = {
       method: "post",
@@ -100,6 +125,21 @@ const ManageRoom = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleDelete = (id, name) => {
+    Swal.fire({
+      title: `ต้องการลบ ${id} ${name}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#4d9669",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteRoom(id);
+      }
+    });
   };
 
   const handleExpandClick = (index) => {
@@ -184,8 +224,7 @@ const ManageRoom = () => {
               </div>
             }
           />
-          <div>
-            {" "}
+
             <Button
               variant="contained"
               size="small"
@@ -193,11 +232,24 @@ const ManageRoom = () => {
               onClick={() => {
                 handleEditOpen(room);
               }}
-              className="bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white"
+              className="bg-gradient-to-r from-[#BC6C23] to-[#DBB482] text-white"
+              sx={{m:1}}
             >
               แก้ไข
             </Button>
-          </div>
+            <Button
+              variant="contained"
+              size="small"
+              aria-label="settings"
+              onClick={() => {
+                handleDelete(room.id, room.name);
+              }}
+              className="bg-gradient-to-r from-[#fc4e5a] to-[#f0b1b6] text-white"
+              sx={{m:1}}
+            >
+              ลบ
+            </Button>
+
           <CardActions disableSpacing>
             <Typography>รายการสิ่งอำนวยความสะดวก...</Typography>
             <ExpandMore
@@ -220,12 +272,6 @@ const ManageRoom = () => {
                     &nbsp;&nbsp;{facility.facility.name}
                   </Typography>
                 ))}
-                {/* {room.roomFacilities.map((facility) => (
-                        <Typography>
-                          <BsCheckCircle color="green" />
-                          &nbsp;&nbsp;{facility.facility.name}
-                        </Typography>
-                      ))} */}
               </div>
             </CardContent>
           </Collapse>
