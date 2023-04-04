@@ -1,11 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auth";
 
 const Home = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!auth.isLoggedIn) {
+      navigate('/login')
+    }
+  }, [auth])
+  
   return (
     <div>
-      <button onClick={() => navigate("/room-searching")}>RoomSearching</button>
+      <button onClick={() => navigate("/")}>RoomSearching</button>
       <button onClick={() => navigate("result-room")}>ResultRoom</button>
       <button onClick={() => navigate("/room-booking-list")}>
         RoomBookingList

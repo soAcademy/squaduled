@@ -11,6 +11,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useAuth } from "../context/auth";
+import { GoGraph } from "react-icons/go";
+import {
+  RiAdminLine,
+  RiArchiveDrawerLine,
+  RiLogoutBoxRLine,
+} from "react-icons/ri";
+import logo from "./LOGO5.png";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -39,6 +47,7 @@ ElevationScroll.propTypes = {
 
 const NavBar = (props) => {
   const navigate = useNavigate();
+  const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,64 +68,78 @@ const NavBar = (props) => {
                 navigate("/");
               }}
             >
-              Logo
+              <img src={logo} className="w-[40px]"/>
             </Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Squaduled
             </Typography>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={handleClick}
-            >
-              <MenuIcon />
-            </IconButton>
 
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem
-                onClick={() => {
-                  navigate("/room-booking-list");
-                  setAnchorEl(null);
-                }}
-              >
-                ดูรายการจอง
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  navigate("/dashboard");
-                  setAnchorEl(null);
-                }}
-              >
-                Dash board
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  navigate("/management-list");
-                  setAnchorEl(null);
-                }}
-              >
-                Admin
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  navigate("/log-in");
-                  setAnchorEl(null);
-                }}
-              >
-                Logout
-              </MenuItem>
-            </Menu>
+            {auth.isLoggedIn && (
+              <>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                  onClick={handleClick}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/room-booking-list");
+                      setAnchorEl(null);
+                    }}
+                  >
+                    <RiArchiveDrawerLine />
+                    &nbsp;&nbsp; ดูรายการจอง
+                  </MenuItem>
+
+                  {auth.role === "admin" && (
+                    <>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/management-list");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <RiAdminLine />
+                        &nbsp;&nbsp; Admin
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/dashboard");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <GoGraph />
+                        &nbsp;&nbsp; Dash board
+                      </MenuItem>
+                    </>
+                  )}
+
+                  <MenuItem
+                    onClick={() => {
+                      props.handleLogout();
+                      setAnchorEl(null);
+                    }}
+                  >
+                    <RiLogoutBoxRLine />
+                    &nbsp;&nbsp; Logout
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
           </Toolbar>
         </AppBar>
       </Box>

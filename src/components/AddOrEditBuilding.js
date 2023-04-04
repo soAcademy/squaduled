@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField } from "@mui/material";
 
@@ -25,7 +24,7 @@ const AddOrEditBuilding = (props) => {
       <DialogActions>
         <Button onClick={props.handleCancel}>Cancel</Button>
         <Button disabled={props.isSaving} onClick={props.handleOk} autoFocus>
-          {props.isSaving? "Saving..." : "OK"}
+          {props.isSaving ? "Saving..." : "OK"}
         </Button>
       </DialogActions>
     </Dialog>

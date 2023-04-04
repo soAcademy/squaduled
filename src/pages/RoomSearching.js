@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
@@ -7,14 +6,18 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 // import dayjs from "dayjs";
 import axios from "axios";
-import CircularProgress from '@mui/material/CircularProgress';
-import * as appConfig from '../AppConfig'
+import CircularProgress from "@mui/material/CircularProgress";
+import * as appConfig from "../AppConfig";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auth";
+import Swal from "sweetalert2";
 
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
 dayjs.extend(localizedFormat);
 
 const RoomSearching = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
   const [showLoading, setShowLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -40,6 +43,7 @@ const RoomSearching = () => {
       method: "post",
       url: `${appConfig.API_URL}/squaduled/checkIsOfficeHour`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,
@@ -81,22 +85,24 @@ const RoomSearching = () => {
     setEndDatetime(_endDatetime);
   }, [selectedDate, selectedTimeEnd]);
 
-
   return (
-    <div className="flex flex-col justify-center items-center" >
+    <div className="flex flex-col justify-center items-center">
       <div>
-        <div>
-          <h1 className="text-sm">สวัสดีคุณเค้ก</h1>
-          <h1 className="text-sm">กรุณากรอกข้อมูลด้านล่าง</h1>
-        </div>
+        <Typography
+          align="center"
+          variant="h5"
+        >{`สวัสดีคุณ ${auth.firstName}`}</Typography>
+        <Typography align="center">
+          กรุณาเลือกเวลาที่ต้องการใช้ห้องประชุม
+        </Typography>
       </div>
-      
-      <div className="bg-gray-200  p-4 m-4 rounded-lg md:w-1/3 xs:w-full ">
-        <div item>
-          <h1 className="text-sm">ค้นหาห้องประชุม</h1>
-        </div>
 
-        <div>
+      <div className="bg-[#ededed] shadow-lg shadow-gray-600 p-4 m-4 rounded-lg md:w-1/3 xs:w-full">
+        <Typography align="center" variant="h5">
+          ค้นหาห้องประชุม
+        </Typography>
+
+        <div className="mt-3">
           <Box
             component="form"
             // sx={{
@@ -105,21 +111,18 @@ const RoomSearching = () => {
             noValidate
             autoComplete="off"
           >
-            <div>
+          
               <TextField
                 id="outlined-number"
                 fullWidth
                 label="จำนวนผู้ประชุม"
                 type="number"
                 value={capacity}
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
                 onChange={(event) => {
                   setCapacity(event.target.value);
                 }}
               />
-            </div>
+           
           </Box>
         </div>
         <br />
@@ -130,7 +133,7 @@ const RoomSearching = () => {
             closeOnSelect
             onChange={(newValue) => setSelectedDate(newValue)}
             label="วันที่"
-            fullWidth
+            slotProps={{ textField: { fullWidth: true } }}
           />
         </div>
         <br />
@@ -149,7 +152,6 @@ const RoomSearching = () => {
               // ampm={false}
               ampmInClock
               label="ถึง"
-              
               value={selectedTimeEnd}
               onChange={(newValue) => setSelectedTimeEnd(newValue)}
             />
@@ -157,21 +159,19 @@ const RoomSearching = () => {
         </div>
         <br />
 
-        <div>
+        <div className="text-center">
           {!isOfficeHour && (
             <div className="pb-4">
-              <Typography variant="h6" className="text-red-500">
+              <Typography align="center" className="text-red-500">
                 ไม่อยู่ในช่วงเวลาทำการ
               </Typography>
             </div>
+
           )}
           <div>
-            {showLoading && (
-              <CircularProgress color="success" />
-            )}
+            {showLoading && <CircularProgress color="success" />}
 
             <Button
-              
               variant="contained"
               fullWidth
               className="bg-[#4A7654]"
