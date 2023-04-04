@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "sprinttech-cake"
+  },
+  "targets": {
+    "sprinttech-cake": {
+      "hosting": {
+        "squaduled": [
+          "squaduled"
+        ]
+      }
+    }
+  }
+}

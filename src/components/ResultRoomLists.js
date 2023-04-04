@@ -114,9 +114,10 @@ const ResultRoomLists = ({ availableRoomsFilterd }) => {
   return (
     <>
       <div className="text-lg text-center font-bold my-2">
-        {availableRoomsFilterd.length === 0
+        <Typography>  {availableRoomsFilterd.length === 0
           ? "ไม่มีห้องว่าง"
-          : "รายการห้องที่สามารถจองได้"}
+          : `รายการห้องที่สามารถจองได้ (${availableRoomsFilterd.length})`}</Typography>
+
       </div>
       <div className="mb-32">
         <div className="flex flex-col items-center justify-center text-center w-full">

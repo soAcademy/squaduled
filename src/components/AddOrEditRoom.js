@@ -31,6 +31,7 @@ const MenuProps = {
 const AddOrEditRoom = (props) => {
   const auth = useAuth();
   const [selectedFacilityIds, setSelectedFacilityIds] = React.useState([]);
+  const [isSaving, setIsSaving] = React.useState(false)
   const theme = useTheme();
 
   const handleChange = (event) => {
@@ -62,7 +63,8 @@ const AddOrEditRoom = (props) => {
   }, [props.selectedRoom?.id]);
 
   const handleSave = () => {
-    let endPoint = props.selectedRoom.id === 0 ? "createRoom" : "updateRoom";
+    setIsSaving(true)
+    const endPoint = props.selectedRoom.id === 0 ? "createRoom" : "updateRoom";
     //Save
     let data = JSON.stringify({
       id: props.selectedRoom.id,
@@ -95,6 +97,9 @@ const AddOrEditRoom = (props) => {
       .catch((error) => {
         console.log(error);
         props.handleError();
+      })
+      .finally(() => {
+        setIsSaving(false)
       });
   };
 
@@ -173,8 +178,8 @@ const AddOrEditRoom = (props) => {
 
       <DialogActions>
         <Button onClick={props.handleCancel}>Cancel</Button>
-        <Button disabled={props.isSaving} onClick={handleSave} autoFocus>
-          {props.isSaving ? "Saving..." : "OK"}
+        <Button disabled={isSaving} onClick={handleSave} autoFocus>
+          {isSaving ? "Saving..." : "OK"}
         </Button>
       </DialogActions>
     </Dialog>

@@ -22,17 +22,35 @@ import { AuthContext } from "./context/auth";
 import AuthChecker from "./components/AuthChecker";
 
 const App = (props) => {
+
+  const [loginLocalStorage, setloginLocalStorage] = useState('')
   const [loginDetail, setLoginDetail] = useState({
     isLoggedIn: false,
   });
 
+  const handleLogin = (loginDetail) => {
+    localStorage.setItem('loginLocalStorage', JSON.stringify(loginDetail));
+    setLoginDetail(loginDetail);
+  }
+
   const handleLogout = () => {
+    localStorage.setItem('loginLocalStorage', "");
     setLoginDetail({
       isLoggedIn: false,
     });
   };
 
+  React.useEffect(() => {
+    //read loginDetail from localStorage
+    const localStorageValue = localStorage.getItem('loginLocalStorage')
+    if (localStorageValue) {
+      setLoginDetail(JSON.parse(localStorageValue))
+    }
+  }, [])
+  
+
   return (
+
     <AuthContext.Provider value={loginDetail}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <React.Fragment>
@@ -46,7 +64,7 @@ const App = (props) => {
                   <Route
                     exact
                     path="/login"
-                    element={<Login setLoginDetail={setLoginDetail} />}
+                    element={<Login handleLogin={handleLogin} />}
                   />
                   <Route exact path="/" element={<RoomSearching />} />
                   <Route
@@ -94,6 +112,8 @@ const App = (props) => {
         </React.Fragment>
       </LocalizationProvider>
     </AuthContext.Provider>
+
+
   );
 };
 

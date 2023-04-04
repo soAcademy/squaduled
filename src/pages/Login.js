@@ -64,7 +64,8 @@ const Login = (props) => {
     axios
       .request(config)
       .then((response) => {
-        props.setLoginDetail({ ...response.data, isLoggedIn: true });
+        let loginDetail = { ...response.data, isLoggedIn: true }
+        props.handleLogin(loginDetail);
       })
       .catch((error) => {
         swal
@@ -74,7 +75,6 @@ const Login = (props) => {
             text: error.response.data.error,
           })
           .then(() => {
-            props.setLoginDetail({ error, isLoggedIn: false });
           })
           .finally(() => {
             setShowLoading(false);
