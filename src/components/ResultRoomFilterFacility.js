@@ -1,18 +1,13 @@
 import React from "react";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import * as appConfig from '../AppConfig'
+import { useAuth } from "../context/auth";
+import * as appConfig from "../AppConfig";
 
 const ResultRoomFilterFacility = (props) => {
-  
-
+  const auth = useAuth();
   const handleSelectFacilities = (event, newFacilities) => {
     props.setSelectedFacilities(newFacilities);
   };
@@ -20,7 +15,6 @@ const ResultRoomFilterFacility = (props) => {
   const [showProgressFacilities, setShowProgressFacilities] =
     React.useState(false);
   const [facilities, setFacilities] = React.useState([]);
-  const [selected, setSelected] = React.useState(false);
 
   React.useEffect(() => {
     loadFacility();
@@ -31,7 +25,9 @@ const ResultRoomFilterFacility = (props) => {
     const config = {
       method: "post",
       url: `${appConfig.API_URL}/squaduled/getAllFacility`,
-      headers: {},
+      headers: {
+        Authorization: auth.token,
+      },
     };
 
     axios
@@ -48,7 +44,8 @@ const ResultRoomFilterFacility = (props) => {
   };
 
   return (
-    <div>
+    <div className="relative flex items-center justify-center w-full text-center overflow-hidden">
+      <div className="overflow-x-auto scrollbar-non">
       {showProgressFacilities && <CircularProgress color="success" />}
       <ToggleButtonGroup
         value={props.selectedFacilities}
@@ -57,11 +54,17 @@ const ResultRoomFilterFacility = (props) => {
         aria-label="text formatting"
       >
         {facilities.map((item) => (
-          <ToggleButton style={{padding:10}} value={item.id} aria-label="bold">
+          <ToggleButton
+            style={{ padding: 10 }}
+            value={item.id}
+            aria-label="bold"
+          >
             {item.name}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+      </div>
+
     </div>
   );
 };

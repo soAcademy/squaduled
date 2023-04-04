@@ -1,9 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import Typography from "@material-ui/core/Typography";
-import Grow from '@mui/material/Grow';
+import Grow from "@mui/material/Grow";
 import { useNavigate } from "react-router-dom";
+import { IoAddCircle, IoArrowBackCircle } from "react-icons/io5";
+import { useAuth } from "../context/auth";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManagementList = () => {
   const classes = useStyles();
+  const auth = useAuth();
   const navigate = useNavigate();
   const lists = [
     { manage: "จัดการห้องประชุม", path: "/manage-building" },
@@ -44,21 +48,32 @@ const ManagementList = () => {
       <Typography variant="h5" className={classes.title}>
         การจัดการ
       </Typography>
-      {lists.map((list,i) => {
+      {lists.map((list, i) => {
         return (
-          <Grow in style={{ transformOrigin: '0 0 0' }}
-          {...( { timeout: i*500 })}>
-          <Button
-            onClick={() => navigate(list.path)}
-            variant="contained"
-            size="large" // set size to large
-            className={classes.button}
+          <Grow
+            in
+            style={{ transformOrigin: "0 0 0" }}
+            {...{ timeout: i * 500 }}
           >
-            {list.manage}
-          </Button>
+            <Button
+              onClick={() => navigate(list.path)}
+              variant="contained"
+              size="large" // set size to large
+              className={classes.button}
+            >
+              {list.manage}
+            </Button>
           </Grow>
         );
       })}
+      <div className="w-full fixed bottom-0">
+        <IconButton
+          onClick={() => navigate("/")}
+          className="fixed float-left left-8 bottom-8 text-6xl text-[#4A7654] hover:text-[#6e9176]"
+        >
+          <IoArrowBackCircle />
+        </IconButton>
+      </div>
     </div>
   );
 };

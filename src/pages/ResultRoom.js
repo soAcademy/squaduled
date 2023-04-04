@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@material-ui/core/Button";
 import ResultRoomFilterFacility from "../components/ResultRoomFilterFacility";
 import ResultRoomLists from "../components/ResultRoomLists";
 import ResultRoomUserRequest from "../components/ResultRoomUserRequest";
+import { IconButton } from "@mui/material";
+import { IoAddCircle, IoArrowBackCircle } from "react-icons/io5";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import * as appConfig from '../AppConfig'
+import * as appConfig from "../AppConfig";
+import { useAuth } from "../context/auth";
 
 const ResultRoom = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
   const [selectedFacilities, setSelectedFacilities] = React.useState([]);
   const [selectedRoom, setSelectedRoom] = useState({});
   const [facilities, setFacilities] = useState([]);
   const [availableRooms, setAvailableRooms] = useState([]);
-  const [availableRoomsFilterd, setAvailableRoomsFilterd] = useState([])
+  const [availableRoomsFilterd, setAvailableRoomsFilterd] = useState([]);
   const [showProgressRoomList, setShowProgressRoomList] = useState(false);
-  
-  const { capacity,selectedTimeStart,selectedTimeEnd } = useParams();
 
-
+  const { capacity, selectedTimeStart, selectedTimeEnd } = useParams();
 
   const loadAvailableRooms = () => {
     setShowProgressRoomList(true);
@@ -35,6 +36,7 @@ const ResultRoom = () => {
       method: "post",
       url: `${appConfig.API_URL}/squaduled/checkAvailableRoom`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,
@@ -54,16 +56,21 @@ const ResultRoom = () => {
   };
 
   useEffect(() => {
-      loadAvailableRooms();
+    loadAvailableRooms();
   }, [capacity]);
 
   useEffect(() => {
-
     if (availableRooms) {
-      const filtered = availableRooms?.map(room => {
-        const facilityIdList = room.roomFacilities?.map(facility => facility.facilityId);
-        return {...room,facilityIdList}
-      }).filter(room => selectedFacilities.every(val => room.facilityIdList.includes(val)))
+      const filtered = availableRooms
+        ?.map((room) => {
+          const facilityIdList = room.roomFacilities?.map(
+            (facility) => facility.facilityId
+          );
+          return { ...room, facilityIdList };
+        })
+        .filter((room) =>
+          selectedFacilities.every((val) => room.facilityIdList.includes(val))
+        );
       // .filter((room) =>
       //   selectedFacilities.includes(
       //     room.facilities.map((facility) => {return facility.facilityId})
@@ -71,14 +78,11 @@ const ResultRoom = () => {
       // );
       setAvailableRoomsFilterd(filtered);
     }
-
-  }, [selectedFacilities,availableRooms]);
-  
+  }, [selectedFacilities, availableRooms]);
 
   return (
-    <div className="w-full">
-      {selectedTimeStart}
-      {selectedTimeEnd}
+    <div className="w-full text-center">
+
       <ResultRoomUserRequest />
       <br />
 
@@ -99,12 +103,12 @@ const ResultRoom = () => {
       {JSON.stringify(availableRoomsFilterd)} */}
 
       <div className="w-full fixed bottom-0">
-        <Button
-          onClick={() => navigate("/room-searching")}
-          className="fixed float-left left-8 bottom-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
+        <IconButton
+          onClick={() => navigate("/")}
+          className="fixed float-left left-8 bottom-8 text-6xl text-[#4A7654] hover:text-[#6e9176]"
         >
-          กลับ
-        </Button>
+          <IoArrowBackCircle />
+        </IconButton>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import axios from "axios";
 import * as appConfig from "../AppConfig";
+import { useAuth } from "../context/auth";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,6 +29,7 @@ const MenuProps = {
 };
 
 const AddOrEditRoom = (props) => {
+  const auth = useAuth();
   const [selectedFacilityIds, setSelectedFacilityIds] = React.useState([]);
   const theme = useTheme();
 
@@ -60,8 +62,7 @@ const AddOrEditRoom = (props) => {
   }, [props.selectedRoom?.id]);
 
   const handleSave = () => {
-
-    let endPoint = props.selectedRoom.id === 0? "createRoom" : "updateRoom";
+    let endPoint = props.selectedRoom.id === 0 ? "createRoom" : "updateRoom";
     //Save
     let data = JSON.stringify({
       id: props.selectedRoom.id,
@@ -79,6 +80,7 @@ const AddOrEditRoom = (props) => {
       maxBodyLength: Infinity,
       url: `${appConfig.API_URL}/squaduled/${endPoint}`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,

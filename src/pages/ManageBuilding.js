@@ -1,14 +1,19 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, IconButton } from "@mui/material";
 import { Paper, Typography } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { IoAddCircle, IoArrowBackCircle } from "react-icons/io5";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grow from "@mui/material/Grow";
 import axios from "axios";
 import AddOrEditBuilding from "../components/AddOrEditBuilding";
 import Swal from "sweetalert2";
 import * as appConfig from "../AppConfig";
+import { useAuth } from "../context/auth";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -26,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    background: "#4A7654",
-    color: "#f5f5f5",
+    background: "#ebebeb",
   },
   label: {
     marginLeft: theme.spacing(1),
@@ -49,12 +53,13 @@ export default function MyComponent() {
 
   const classes = useStyles();
   const navigate = useNavigate();
+  const auth = useAuth();
 
   // +++++++ handle clicks +++++++
   const handleDelete = (id, name) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `Confirm delete ${name}?`,
+      text: `Confirm delete ${id} ${name}?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -70,7 +75,7 @@ export default function MyComponent() {
   const handleAddOpen = () => {
     setBuildingId(0);
     setBuildingName("");
-    // setOpenDialog(true);
+    setOpenDialog(true);
     setTitle("เพิ่มอาคารใหม่");
   };
 
@@ -105,7 +110,9 @@ export default function MyComponent() {
     const config = {
       method: "post",
       url: `${appConfig.API_URL}/squaduled/getAllBuilding`,
-      headers: {},
+      headers: {
+        Authorization: auth.token,
+      },
     };
 
     axios
@@ -130,6 +137,7 @@ export default function MyComponent() {
       maxBodyLength: Infinity,
       url: `${appConfig.API_URL}/squaduled/createBuilding`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,
@@ -160,6 +168,7 @@ export default function MyComponent() {
       maxBodyLength: Infinity,
       url: `${appConfig.API_URL}/squaduled/updateBuilding`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,
@@ -183,8 +192,9 @@ export default function MyComponent() {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://squaduled-api-2miz.vercel.app/squaduled/deleteBuilding",
+      url: `${appConfig.API_URL}/squaduled/deleteBuilding`,
       headers: {
+        Authorization: auth.token,
         "Content-Type": "application/json",
       },
       data: data,
@@ -205,11 +215,11 @@ export default function MyComponent() {
 
   return (
     <div>
-      <Typography variant="h5" className={classes.title}>
+      <Typography align="center" variant="h5" className={classes.title}>
         เลือกอาคาร
       </Typography>
 
-      <div className="mb-32">
+      <div className="mb-32 text-center">
         {showLoading && <CircularProgress color="success" />}
         {buildings.map((building, i) => {
           return (
@@ -225,24 +235,22 @@ export default function MyComponent() {
                 className={classes.paper}
               >
                 <Button
-                  className="border border-gray-100 text-gray-100"
+                  style={{ color: "#555" }}
                   onClick={() => navigate(`/manage-room/${building.id}`)}
                 >
                   {building.name}
                 </Button>
                 <ButtonGroup>
-                  <Button
-                    className="border border-gray-100 text-gray-100"
+                  <IconButton
                     onClick={() => handleEditOpen(building.id, building.name)}
                   >
-                    แก้ไขอาคาร
-                  </Button>
-                  <Button
-                    className="border border-gray-100 text-gray-100"
+                    <BorderColorIcon />
+                  </IconButton>
+                  <IconButton
                     onClick={() => handleDelete(building.id, building.name)}
                   >
-                    ลบอาคาร
-                  </Button>
+                    <DeleteIcon />
+                  </IconButton>
                 </ButtonGroup>
               </Paper>
             </Grow>
@@ -251,19 +259,18 @@ export default function MyComponent() {
       </div>
 
       <div className="w-full fixed bottom-0">
-        <Button
+        <IconButton
           onClick={() => navigate("/management-list")}
-          className="fixed float-left left-8 bottom-8 px-8 py-4 rounded-full bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
+          className="fixed float-left left-8 bottom-8 text-6xl text-[#4A7654] hover:text-[#6e9176]"
         >
-          กลับ
-        </Button>
-        <Button
-          color="primary"
+          <IoArrowBackCircle />
+        </IconButton>
+        <IconButton
           onClick={handleAddOpen}
-          className="fixed  float-right  right-8 bottom-8 p-4 rounded-full bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-xl"
+          className="fixed  float-right  right-8 bottom-8 text-6xl text-[#4A7654] hover:text-[#6e9176"
         >
-          +
-        </Button>
+          <IoAddCircle />
+        </IconButton>
         <AddOrEditBuilding
           title={title}
           buildingName={buildingName}

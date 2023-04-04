@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, Typography, TextField } from "@mui/material";
+import {
+  Container,
+  Typography,
+  TextField,
+  Link,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@material-ui/core";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import * as appConfig from "../AppConfig";
-import CircularProgress from "@mui/material/CircularProgress";
 import swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
-  box: {
+  container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "80vh",
+    minHeight: "100vh",
   },
   form: {
     display: "flex",
@@ -22,10 +31,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     padding: theme.spacing(1),
-    background: "#ebebeb",
+    // backgroundColor: theme.palette.background.paper,
+    background:"#ebebeb",
     borderRadius: theme.spacing(2),
     boxShadow: theme.shadows[5],
-    maxWidth: "300px",
+    maxWidth: "400px",
     width: "80%",
   },
   input: {
@@ -46,21 +56,20 @@ const Login = (props) => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showLoading, setShowLoading] = useState(false);
+  // const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
 
   const handleSubmit = (event) => {
-    setShowLoading(true);
     event.preventDefault();
     console.log(`Username: ${username}, Password: ${password}`);
 
-    const data = JSON.stringify({
+    let data = JSON.stringify({
       userName: username,
       password: password,
     });
 
-    const config = {
+    let config = {
       method: "post",
       maxBodyLength: Infinity,
       url: `${appConfig.API_URL}/squaduled/login`,
@@ -84,9 +93,6 @@ const Login = (props) => {
           })
           .then(() => {
             props.setLoginDetail({ error, isLoggedIn: false });
-          })
-          .finally(() => {
-            setShowLoading(false);
           });
       });
   };
@@ -97,8 +103,16 @@ const Login = (props) => {
     }
   }, [auth]);
 
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   return (
-    <Box className={classes.box} Container>
+    <Container className={classes.container}Container>
       <form className={classes.form} onSubmit={handleSubmit}>
         <Typography variant="h4" gutterBottom className="pt-5">
           ยินดีต้อนรับ
@@ -123,21 +137,44 @@ const Login = (props) => {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        {showLoading ? (
-          <CircularProgress color="success" />
-        ) : (
-          <Button
-            // className={classes.button}
-            className="px-6 mb-6 bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white"
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Login
-          </Button>
-        )}
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Login
+        </Button>
+        {/* <Typography variant="body2" gutterBottom>
+          <Link href="#" onClick={handleOpen}>
+            Forgot password?
+          </Link>
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+          Don't have an account?{" "}
+          <Link href="#" onClick={handleOpen}>
+            Sign up
+          </Link>
+        </Typography> */}
       </form>
-    </Box>
+      {/* <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Apply for Membership</DialogTitle>
+        <DialogContent>
+          <Typography>
+            To apply for membership, please fill out the application form.
+          </Typography>
+          Add your membership application form here
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+    </Container>
   );
 };
 

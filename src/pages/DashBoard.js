@@ -3,7 +3,7 @@ import ReactECharts from "echarts-for-react";
 
 const DashBoard = () => {
   return (
-    <div>DashBoard</div>
+    <div>DashBoard is coming soon...</div>
   )
 }
 
