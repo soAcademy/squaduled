@@ -91,6 +91,7 @@ export default function MyComponent() {
   };
 
   const handleOk = () => {
+    setIsSaving(true);
     if (buildingId === 0) {
       createBuilding();
     } else {
@@ -127,7 +128,6 @@ export default function MyComponent() {
   };
 
   const createBuilding = () => {
-    setIsSaving(true);
     const data = JSON.stringify({
       name: buildingName,
     });
@@ -182,7 +182,10 @@ export default function MyComponent() {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })      
+      .finally(() => {
+        setIsSaving(false);
+      });;
   };
   const deleteBuilding = () => {
     const data = JSON.stringify({

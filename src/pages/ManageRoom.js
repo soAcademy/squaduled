@@ -216,7 +216,7 @@ const ManageRoom = () => {
                 <div>
                   <BsFillBuildingFill />
                   &nbsp;&nbsp;
-                  {`${room.buildingName} ชั้น ${room.floor} `}&nbsp;&nbsp;
+                  {`${room.building.name} ชั้น ${room.floor} `}&nbsp;&nbsp;
                   <BsFillPeopleFill />
                   &nbsp;&nbsp;
                   {`${room.capacityMax}`}
