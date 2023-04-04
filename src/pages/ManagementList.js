@@ -11,6 +11,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     height: "70vh",
+    backgroundImage:
+      "url('https://iflaapr.org/sites/default/files/inline-images/06-Urban%20Gallery%20Hyperlane-Lu%20Bing.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 6,
+    color: '#fff',
   },
   title: {
     marginBottom: theme.spacing(4),
@@ -34,7 +43,11 @@ const ManagementList = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" className={classes.title}>
+      <Typography
+        variant="h5"
+        className={classes.title}
+        className=" text-white pd-5 px-4 py-6"
+      >
         การจัดการ
       </Typography>
       <Button
@@ -71,7 +84,8 @@ const ManagementList = () => {
       </Button>
       <Button
         onClick={() => navigate("/room-searching")}
-       className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm">
+        className="absolute bottom-8 left-8 px-6 py-2 rounded-lg bg-[#4A7654] hover:bg-[#6e9176] text-center text-gray-200 text-sm"
+      >
         กลับ
       </Button>
     </div>

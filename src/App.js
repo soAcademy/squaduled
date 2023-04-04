@@ -21,10 +21,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import NavBar from "./components/NavBar";
 import NotFound from "./pages/NotFound";
-
+import Background from "./components/Background";
 const App = (props) => {
   return (
+    
     <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <Background/> */}
       <React.Fragment>
         <CssBaseline />
         <BrowserRouter>

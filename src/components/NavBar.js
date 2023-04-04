@@ -12,16 +12,21 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
+
+
+
 function ElevationScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
+  
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
     target: window ? window() : undefined,
   });
+    
 
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
@@ -51,9 +56,10 @@ const NavBar = (props) => {
   return (
     <ElevationScroll {...props}>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar className="bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white">
+        <AppBar className="bg-gradient-to-r from-[#BF6E26] to-[#8ac598] text-white">
           <Toolbar>
-            <Button color="inherit">Logo</Button>
+            <Button 
+            color="inherit">Logo</Button>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Squaduled
             </Typography>
