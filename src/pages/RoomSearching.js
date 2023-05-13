@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import * as appConfig from "../AppConfig";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import AvailableTime from "../components/AvailableTime";
 
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
@@ -56,7 +57,6 @@ const RoomSearching = () => {
         } else {
           setIsOfficeHour(false);
         }
-
       })
       .catch((error) => {
         console.log(error);
@@ -93,7 +93,6 @@ const RoomSearching = () => {
           กรุณาเลือกเวลาที่ต้องการใช้ห้องประชุม
         </Typography>
       </div>
-
       <div className="bg-[#fff] shadow-lg shadow-gray-600 p-4 m-4 rounded-lg md:w-1/3 xs:w-full">
         <Typography align="center" variant="h5">
           ค้นหาห้องประชุม
@@ -169,6 +168,7 @@ const RoomSearching = () => {
           </div>
         </div>
       </div>
+      <AvailableTime />
     </div>
   );
 };
