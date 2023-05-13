@@ -27,7 +27,7 @@ const RoomSearching = () => {
     dayjs("2000-01-01T08:30")
   );
   const [isOfficeHour, setIsOfficeHour] = useState(true);
-  const [capacity, setCapacity] = useState(0);
+  const [capacity, setCapacity] = useState(1);
   const [startDatetime, setStartDatetime] = useState("");
   const [endDatetime, setEndDatetime] = useState("");
 
@@ -160,7 +160,7 @@ const RoomSearching = () => {
             <Button
               variant="contained"
               fullWidth
-              className="bg-[#4A7654]"
+              className="bg-[#4A7654] rounded-lg p-2 text-lg text-white"
               onClick={checkIsOfficeHours}
             >
               ค้นหา

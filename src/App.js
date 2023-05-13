@@ -21,9 +21,8 @@ import NotFound from "./pages/NotFound";
 import { AuthContext } from "./context/auth";
 import AuthChecker from "./components/AuthChecker";
 
-const App = (props) => {
+const App = () => {
 
-  const [loginLocalStorage, setloginLocalStorage] = useState('')
   const [loginDetail, setLoginDetail] = useState({
     isLoggedIn: false,
   });
