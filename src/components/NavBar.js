@@ -106,26 +106,27 @@ const NavBar = (props) => {
                   </MenuItem>
 
                   {auth.role === "admin" && (
-                    <>
-                      <MenuItem
-                        onClick={() => {
-                          navigate("/management-list");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        <RiAdminLine />
-                        &nbsp;&nbsp; Admin
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          navigate("/dashboard");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        <GoGraph />
-                        &nbsp;&nbsp; Dash board
-                      </MenuItem>
-                    </>
+                    <MenuItem
+                      onClick={() => {
+                        navigate("/management-list");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <RiAdminLine />
+                      &nbsp;&nbsp; Admin
+                    </MenuItem>
+                  )}
+
+                  {auth.role === "admin" && (
+                    <MenuItem
+                      onClick={() => {
+                        navigate("/dashboard");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <GoGraph />
+                      &nbsp;&nbsp; Dash board
+                    </MenuItem>
                   )}
 
                   <MenuItem
