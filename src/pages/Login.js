@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
+import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import * as appConfig from "../AppConfig";
 import CircularProgress from "@mui/material/CircularProgress";
 import swal from "sweetalert2";
+import LoginInfo from "../components/LoginInfo";
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -64,7 +66,7 @@ const Login = (props) => {
     axios
       .request(config)
       .then((response) => {
-        let loginDetail = { ...response.data, isLoggedIn: true }
+        let loginDetail = { ...response.data, isLoggedIn: true };
         props.handleLogin(loginDetail);
       })
       .catch((error) => {
@@ -74,8 +76,7 @@ const Login = (props) => {
             title: "Oops...",
             text: error.response.data.error,
           })
-          .then(() => {
-          })
+          .then(() => {})
           .finally(() => {
             setShowLoading(false);
           });
@@ -89,45 +90,48 @@ const Login = (props) => {
   }, [auth]);
 
   return (
-    <Box className={classes.box} Container>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <Typography variant="h4" gutterBottom className="pt-5">
-          ยินดีต้อนรับ
-        </Typography>
-        <Typography variant="h7" gutterBottom className="pd-10">
-          เข้าสู่ระบบ Squaduled
-        </Typography>
-        <TextField
-          className={classes.input}
-          label="Username"
-          variant="outlined"
-          size="small"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <TextField
-          className={classes.input}
-          label="Password"
-          type="password"
-          variant="outlined"
-          size="small"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        {showLoading ? (
-          <CircularProgress color="success" />
-        ) : (
-          <Button
-            className="px-6 mb-6 bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white"
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Login
-          </Button>
-        )}
-      </form>
-    </Box>
+    <>
+      <Box className={classes.box} Container>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <Typography variant="h4" gutterBottom className="pt-5">
+            ยินดีต้อนรับ
+          </Typography>
+          <Typography variant="h7" gutterBottom className="pd-10">
+            เข้าสู่ระบบ Squaduled
+          </Typography>
+          <TextField
+            className={classes.input}
+            label="ชื่อผู้ใช้"
+            variant="outlined"
+            size="small"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <TextField
+            className={classes.input}
+            label="รหัสผ่าน"
+            type="password"
+            variant="outlined"
+            size="small"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          {showLoading ? (
+            <CircularProgress color="success" />
+          ) : (
+            <Button
+              className="px-6 mb-6 bg-gradient-to-r from-[#4A7654] to-[#8ac598] text-white"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              ลงชื่อเข้าใช้
+            </Button>
+          )}
+        </form>
+        <LoginInfo />
+      </Box>
+    </>
   );
 };
 
