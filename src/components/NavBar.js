@@ -8,7 +8,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { MenuItem } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useAuth } from "../context/auth";
@@ -17,14 +17,15 @@ import {
   RiAdminLine,
   RiArchiveDrawerLine,
   RiLogoutBoxRLine,
+  RiSearchLine,
 } from "react-icons/ri";
 import logo from "./LOGO5.png";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   navMenu: {
-    marginLeft: "15px",
-    marginRight: "15px",
+    marginLeft: "10px",
+    marginRight: "10px",
   },
 }));
 
@@ -114,8 +115,16 @@ const NavBar = (props) => {
                     <RiArchiveDrawerLine />
                     &nbsp;&nbsp; ดูรายการจอง
                   </MenuItem>
-                  <br />
-                  <br />
+                  <MenuItem
+                    className={classes.navMenu}
+                    onClick={() => {
+                      navigate("/");
+                      setAnchorEl(null);
+                    }}
+                  >
+                    <RiSearchLine />
+                    &nbsp;&nbsp; ค้นหาห้องประชุม
+                  </MenuItem>
                   {auth.role === "admin" && (
                     <MenuItem
                       className={classes.navMenu}
@@ -125,11 +134,9 @@ const NavBar = (props) => {
                       }}
                     >
                       <RiAdminLine />
-                      &nbsp;&nbsp; Admin
+                      &nbsp;&nbsp; การจัดการ
                     </MenuItem>
                   )}
-                  <br />
-                  <br />
                   {auth.role === "admin" && (
                     <MenuItem
                       className={classes.navMenu}
@@ -139,11 +146,9 @@ const NavBar = (props) => {
                       }}
                     >
                       <GoGraph />
-                      &nbsp;&nbsp; Dash board
+                      &nbsp;&nbsp; สถิติการจอง
                     </MenuItem>
                   )}
-                  <br />
-                  <br />
                   <MenuItem
                     className={classes.navMenu}
                     onClick={() => {
@@ -152,7 +157,7 @@ const NavBar = (props) => {
                     }}
                   >
                     <RiLogoutBoxRLine />
-                    &nbsp;&nbsp; Logout
+                    &nbsp;&nbsp; ออกจากระบบ
                   </MenuItem>
                 </Menu>
               </>
