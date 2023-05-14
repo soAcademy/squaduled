@@ -21,9 +21,8 @@ import NotFound from "./pages/NotFound";
 import { AuthContext } from "./context/auth";
 import AuthChecker from "./components/AuthChecker";
 
-const App = (props) => {
+const App = () => {
 
-  const [loginLocalStorage, setloginLocalStorage] = useState('')
   const [loginDetail, setLoginDetail] = useState({
     isLoggedIn: false,
   });
@@ -57,6 +56,7 @@ const App = (props) => {
           <CssBaseline />
           <BrowserRouter>
             <NavBar handleLogout={handleLogout} />
+            {/* <div className=" bg-[url('/public/im3.jpg')] bg-no-repeat bg-cover bg-center bg-fixed h-screen"></div> */}
             <Container>
               <Toolbar />
               <Box sx={{ my: 2 }}>

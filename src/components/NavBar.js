@@ -19,6 +19,14 @@ import {
   RiLogoutBoxRLine,
 } from "react-icons/ri";
 import logo from "./LOGO5.png";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  navMenu: {
+    marginLeft: "15px",
+    marginRight: "15px",
+  },
+}));
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -46,6 +54,7 @@ ElevationScroll.propTypes = {
 };
 
 const NavBar = (props) => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -96,6 +105,7 @@ const NavBar = (props) => {
                   }}
                 >
                   <MenuItem
+                    className={classes.navMenu}
                     onClick={() => {
                       navigate("/room-booking-list");
                       setAnchorEl(null);
@@ -104,31 +114,38 @@ const NavBar = (props) => {
                     <RiArchiveDrawerLine />
                     &nbsp;&nbsp; ดูรายการจอง
                   </MenuItem>
-
+                  <br />
+                  <br />
                   {auth.role === "admin" && (
-                    <>
-                      <MenuItem
-                        onClick={() => {
-                          navigate("/management-list");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        <RiAdminLine />
-                        &nbsp;&nbsp; Admin
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          navigate("/dashboard");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        <GoGraph />
-                        &nbsp;&nbsp; Dash board
-                      </MenuItem>
-                    </>
+                    <MenuItem
+                      className={classes.navMenu}
+                      onClick={() => {
+                        navigate("/management-list");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <RiAdminLine />
+                      &nbsp;&nbsp; Admin
+                    </MenuItem>
                   )}
-
+                  <br />
+                  <br />
+                  {auth.role === "admin" && (
+                    <MenuItem
+                      className={classes.navMenu}
+                      onClick={() => {
+                        navigate("/dashboard");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <GoGraph />
+                      &nbsp;&nbsp; Dash board
+                    </MenuItem>
+                  )}
+                  <br />
+                  <br />
                   <MenuItem
+                    className={classes.navMenu}
                     onClick={() => {
                       props.handleLogout();
                       setAnchorEl(null);

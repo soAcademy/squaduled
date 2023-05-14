@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import * as appConfig from "../AppConfig";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import AvailableTime from "../components/AvailableTime";
 
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 const dayjs = require("dayjs");
@@ -26,7 +27,7 @@ const RoomSearching = () => {
     dayjs("2000-01-01T08:30")
   );
   const [isOfficeHour, setIsOfficeHour] = useState(true);
-  const [capacity, setCapacity] = useState(0);
+  const [capacity, setCapacity] = useState(1);
   const [startDatetime, setStartDatetime] = useState("");
   const [endDatetime, setEndDatetime] = useState("");
 
@@ -56,7 +57,6 @@ const RoomSearching = () => {
         } else {
           setIsOfficeHour(false);
         }
-
       })
       .catch((error) => {
         console.log(error);
@@ -93,7 +93,6 @@ const RoomSearching = () => {
           กรุณาเลือกเวลาที่ต้องการใช้ห้องประชุม
         </Typography>
       </div>
-
       <div className="bg-[#fff] shadow-lg shadow-gray-600 p-4 m-4 rounded-lg md:w-1/3 xs:w-full">
         <Typography align="center" variant="h5">
           ค้นหาห้องประชุม
@@ -161,7 +160,7 @@ const RoomSearching = () => {
             <Button
               variant="contained"
               fullWidth
-              className="bg-[#4A7654]"
+              className="bg-[#4A7654] rounded-lg p-2 text-lg text-white"
               onClick={checkIsOfficeHours}
             >
               ค้นหา
@@ -169,6 +168,7 @@ const RoomSearching = () => {
           </div>
         </div>
       </div>
+      <AvailableTime />
     </div>
   );
 };
